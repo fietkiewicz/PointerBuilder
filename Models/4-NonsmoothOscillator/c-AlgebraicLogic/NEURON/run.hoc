@@ -1,0 +1,14 @@
+// Documentation: https://github.com/fietkiewicz/PointerBuilder
+// Description: Pedagogical model of a nonsmooth brain/body system.
+
+// Create model and insert mechanisms
+create model
+access model
+insert brain
+insert body
+
+// Set pointers
+setpointer model.bPointer_brain(0.5), model.b_body(0.5)
+
+// Load run controls and graph window
+load_file("graph.ses")

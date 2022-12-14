@@ -1,0 +1,21 @@
+// Documentation: https://github.com/fietkiewicz/PointerBuilder
+// Description: Closed-loop model of feeding behavior in the sea hare Aplysia californica that incorporates biologically-motivated nonsmooth dynamics.
+
+// Create section and insert mechanisms
+create model
+access model
+insert brain
+insert body
+
+// Set pointers
+setpointer model.a0Pointer_body(0.5), model.a0_brain(0.5)
+setpointer model.a1Pointer_body(0.5), model.a1_brain(0.5)
+setpointer model.a2Pointer_body(0.5), model.a2_brain(0.5)
+setpointer model.xrPointer_brain(0.5), model.xr_body(0.5)
+
+// Load run controls and graph window
+load_file("graph.ses")
+
+// Set mu
+mu_brain = 1e-5
+print "mu_brain = ", mu_brain

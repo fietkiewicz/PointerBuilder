@@ -1,0 +1,15 @@
+// Documentation: https://github.com/fietkiewicz/PointerBuilder
+// Description: Lotka-Volterra (predator/prey) system.
+
+// Create section and insert mechanisms
+create model
+access model
+insert prey
+insert predator
+
+// Set pointers
+setpointer model.aPointer_predator(0.5), model.a_prey(0.5)
+setpointer model.bPointer_prey(0.5), model.b_predator(0.5)
+
+// Load run controls and graph window
+load_file("graph.ses")

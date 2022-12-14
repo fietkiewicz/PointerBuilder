@@ -1,0 +1,18 @@
+// Documentation: https://github.com/fietkiewicz/PointerBuilder
+// Description: Neuromechanical, closed-loop model of a half-
+center oscillator coupled to a rudimentary motor system.
+
+// Create section and insert mechanisms
+create model
+access model
+insert brain
+insert body
+
+// Set pointers
+setpointer model.L1pointer_brain(0.5), L1_body
+setpointer model.L2pointer_brain(0.5), L2_body
+setpointer model.V1pointer_body(0.5), model.V1_brain(0.5)
+setpointer model.V2pointer_body(0.5), model.V2_brain(0.5)
+
+// Load run controls and graph window
+load_file("graph.ses")

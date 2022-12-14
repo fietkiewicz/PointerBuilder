@@ -1,0 +1,360 @@
+// Source: https://github.com/fietkiewicz/PointerBuilder
+// Description: Utility for creating "setpointer" instructions in NEURON. See README.md for more details.
+
+objref box
+strdef pointer_mod, pointer_vars, pointer_section, source_mod, source_section
+strdef filename, line, s // Strings used for reading mod file
+objref file, strobj
+strobj = new StringFunctions()
+strdef pointer_name, source_name
+strdef separator1, separator2
+strdef variable // Next variable in POINTER list before a comma
+
+separator1 = "-------------------------------" // Text that appears between fields in each column
+separator2 = "--------------------------------------------" // Text that appears between fields in each column
+pointer_mod = "NOT ENTERED"
+pointer_name = "NOT ENTERED"
+pointer_section = "NOT ENTERED"
+source_mod = "NOT ENTERED"
+source_name = "NOT ENTERED"
+source_section = "NOT ENTERED"
+
+type = 1 // Source type (1 = state variable, 2 = parameter)
+
+box = new HBox()
+box.intercept(1)	//all following creations go into the "vbox" box
+
+xpanel("A", 0)
+xlabel("       Pointer Settings")
+xlabel(separator1)
+xlabel("NMODL file with pointer:")
+xvarlabel(pointer_mod)
+xbutton("Edit", "string_dialog(\"Enter name of NMODL file with pointer:\", pointer_mod)")
+xbutton("Choose file", "get_pointer_mod()")
+xlabel(separator1)
+xlabel("Name of pointer variable:")
+xvarlabel(pointer_name)
+xbutton("Edit", "string_dialog(\"Enter pointer variable names:\", pointer_name)")
+xlabel(separator1)
+xlabel("Section name with pointer:")
+xvarlabel(pointer_section)
+xbutton("Edit", "string_dialog(\"Enter pointer section name:\", pointer_section)")
+xpanel()
+
+xpanel("B", 0)
+xlabel("        State/parameter Settings")
+xlabel(separator2)
+xlabel("NMODL file with state/parameter:")
+xvarlabel(source_mod)
+xbutton("Edit", "string_dialog(\"Enter section name with source variable or parameter:\", source_mod)")
+xbutton("Choose file", "get_source_mod()")
+xlabel(separator2)
+xlabel("Name of state/parameter:")
+xvarlabel(source_name)
+xbutton("Edit", "string_dialog(\"Enter section name with source variable or parameter:\", source_name)")
+xlabel(separator2)
+xlabel("Section name with state/parameter:")
+xvarlabel(source_section)
+xbutton("Edit", "string_dialog(\"Enter section name with source variable or parameter:\", source_section)")
+xlabel(separator2)
+xlabel("Type:")
+xradiobutton("State variable", "radio_state()", 1)
+xradiobutton("Parameter", "radio_parameter()")
+xpanel()
+
+xpanel("C", 0)
+xlabel("         Actions")
+xlabel("--------------------------")
+xbutton("    Make .hoc file     ", "make_hoc_file()")
+xbutton("View hoc command", "view_window()")
+xbutton("    Save settings     ", "save_settings()")
+xbutton("    Load settings     ", "load_settings()")
+xbutton("            Help            ", "help_window()")
+xpanel()
+
+box.intercept(0)	//ends intercept mode
+box.map()		//draw the box and its contents
+
+// Set type as state variable
+proc radio_state() {
+    type = 1
+}
+
+// Set type as parameter
+proc radio_parameter() {
+    type = 2
+}
+
+// Save settings
+proc save_settings() {
+    // Create file
+    objref file
+    file = new File()
+    file.chooser("w", "Save settings: Select file or", "", "Save")
+    if (file.chooser()) {
+        file.wopen(file.getname())
+        file.printf("%s\n", pointer_section)
+        file.printf("%s\n", pointer_name)
+        file.printf("%s\n", pointer_mod)
+        file.printf("%s\n", source_section)
+        file.printf("%s\n", source_name)
+        file.printf("%s\n", source_mod)
+        // Cleanup
+        file.flush()
+        file.close()
+    }
+}
+
+// Load settings
+proc load_settings() {
+    file = new File()
+    file.chooser("r", "Select a file or", "", "Open")
+    if (file.chooser()) {
+        file.gets(line)
+        strobj.left(line, strobj.len(line) - 1) // Remove newline
+        pointer_section = line
+        file.gets(line)
+        strobj.left(line, strobj.len(line) - 1) // Remove newline
+        pointer_name = line
+        file.gets(line)
+        strobj.left(line, strobj.len(line) - 1) // Remove newline
+        pointer_mod = line
+        file.gets(line)
+        strobj.left(line, strobj.len(line) - 1) // Remove newline
+        source_section = line
+        file.gets(line)
+        strobj.left(line, strobj.len(line) - 1) // Remove newline
+        source_name = line
+        file.gets(line)
+        strobj.left(line, strobj.len(line) - 1) // Remove newline
+        source_mod = line
+        file.close()
+    }
+}
+
+// Get pointer mod file name and pointer variables
+proc get_pointer_mod() {
+    // Get pointer mod file name
+    file = new File()
+    file.chooser("r", "Select a mod file or", "", "Open")
+    if (file.chooser()) {
+        strobj.tail(file.getname(), file.dir(), filename)
+        strobj.head(filename, ".mod", pointer_mod)
+
+        // Find line with POINTER and get the variables
+        foundPointer = 0
+        while (!file.eof() && !foundPointer) {
+             file.gets(line)
+             if (strobj.tail(line, "POINTER ", s) > -1) {
+                    foundPointer = 1 // Terminate loop because we found the POINTER line
+             }
+        }
+        file.close()
+        strobj.left(s, strobj.len(s) - 1) // Remove newline
+        pointer_vars = s
+        variable_window()
+    }
+}
+
+// Get source mod file name
+proc get_source_mod() {
+    file = new File()
+    file.chooser("r", "Select a mod file or", "*.mod", "Open")
+    if (file.chooser()) {
+        strobj.tail(file.getname(), file.dir(), filename)
+        strobj.head(filename, ".mod", source_mod)
+    }
+}
+
+// Create hoc file using string of pointer variables
+proc make_hoc_file() {
+    // Create file
+    objref file
+    file = new File()
+    file.chooser("w", "Choose existing file or", "", "Create file")
+    if (file.chooser()) {
+        file.wopen(file.getname())
+        if (type == 1) {
+            // Use syntax for state variable
+            file.printf("setpointer %s.%s_%s(0.5), %s.%s_%s(0.5)\n", pointer_section, pointer_name, pointer_mod, source_section, source_name, source_mod)
+        } else {
+            // Use syntax for parameter
+            file.printf("setpointer %s.%s_%s(0.5), %s_%s", pointer_section, pointer_name, pointer_mod, source_name, source_mod)
+        }
+        // Cleanup
+        file.flush()
+        file.close()
+    }
+}
+
+// Display hoc code in window
+objref viewbox
+proc view_window() {
+    viewbox = new VBox()
+    viewbox.intercept(1)    //all following creations go into the box
+    xpanel("X", 0)
+    xlabel("Use the following setpointer command:")
+    xlabel(" ")
+    printf("\nUse the following setpointer command:\n")
+    strdef output
+    if (type == 1) {
+        // Use syntax for state variable
+        sprint(output, "setpointer %s.%s_%s(0.5), %s.%s_%s(0.5)", pointer_section, pointer_name, pointer_mod, source_section, source_name, source_mod)
+    } else {
+        // Use syntax for parameter
+        sprint(output, "setpointer %s.%s_%s(0.5), %s_%s", pointer_section, pointer_name, pointer_mod, source_name, source_mod)
+    }
+    xlabel(output)
+    xlabel(" ")
+    xlabel("NOTE: This text is also available in the console window for copying. ")
+    printf(output)
+    printf("\n")
+    xpanel()
+    viewbox.intercept(0)    //ends intercept mode
+    viewbox.map()       //draw the box and its contents
+}
+
+// Help window
+objref helpbox
+strdef helpseparator
+helpseparator = "--------------------------------------------------------------------------------------------------------------------------------"
+proc help_window() {
+    helpbox = new VBox()
+    helpbox.intercept(1)    //all following creations go into the box
+    xpanel("X", 0)
+
+    xlabel("Contents: ")
+    xlabel("1. Description ")
+    xlabel("2. The 'setpointer' statement")
+    xlabel("3. Pointers in NMODL")
+    xlabel("4. State variables and parameters in NMODL")
+    xlabel(" ")
+    xlabel(helpseparator)
+
+    xlabel("1. Description ")
+    xlabel(helpseparator)
+    xlabel("PointerBuilder.hoc is a tool that assists the user in constructing a 'setpointer' statement. Additional support is available at this site: ")
+    xlabel("                                                                          https://tinyurl.com/pointerbuilder ")
+    xlabel("")
+    xlabel("The following are required fields. (See code examples in the sections that follow.)")
+    xlabel("1. NMODL file with pointer: ")
+    xlabel("     Name of a .mod file that contains the pointer. (Example: myMod1)")
+    xlabel("2. Name of pointer variable: ")
+    xlabel("     Name of the variable declared in the NMODL file using the POINTER command. (Example: xPointer)")
+    xlabel("3. Section name with pointer: ")
+    xlabel("     Name of section which was used to insert the mechanism containing the pointer. (Example: mySection1)")
+    xlabel("4. NMODL file with state variable or parameter: ")
+    xlabel("     Name of a .mod file that contains the source state variable or paramater. (Example: myMod2)")
+    xlabel("5. Name of state variable or parameter: ")
+    xlabel("     Name of state variable or parameter which the pointer will reference. (Example: x)")
+    xlabel("6. Section name with source variable or parameter: ")
+    xlabel("     Name of section which was used to insert the mechanism containing the state variable or parameter. (Example: mySection2)")
+    xlabel("7. Type: ")
+    xlabel("     Selection of type determines 'setpointer' syntax which is defferent for a state variable vs. a parameter.")
+    xlabel("")
+    xlabel("The following action buttons are available:")
+    xlabel("1. Make .hoc file: Saves hoc statement for 'setpointer' instruction to a file.")
+    xlabel("2. View hoc command: Displays hoc statement for 'setpointer' instruction on the screen.")
+    xlabel("3. Save settings: Saves settings to a file for later use.")
+    xlabel("4. Load settings: Loads settings from a previously saved file.")
+    xlabel("5. Help: Displays this window.")
+    xlabel(" ")
+    xlabel(helpseparator)
+
+    xlabel("2. The 'setpointer' statement")
+    xlabel(helpseparator)
+    xlabel("A 'setpointer' statement requires sections that must be created and mechanisms that must be inserted. This is demonstracted by ")
+    xlabel("the .hoc code segment below using two sections and mechanisms from the NMODL examples shown on the right. PointerBuilder ")
+    xlabel("can generate the last line that contains 'setpointer'. The user must copy it into their own .hoc file. ")
+    xlabel(" ")
+    xlabel("Sample hoc code:")
+    xlabel(" ")
+    xlabel("// Create sections and insert mechanisms")
+    xlabel("create mySection1 ")
+    xlabel("access mySection1 ")
+    xlabel("insert myMod1 ")
+    xlabel("create mySection2 ")
+    xlabel("access mySection2 ")
+    xlabel("insert myMod2 ")
+    xlabel(" ")
+    xlabel("// Set pointer (must be manually entered by the user)")
+    xlabel("setpointer mySection1.xPointer_myMod1(0.5), mySection2.x_myMod2(0.5)")
+    xlabel(" ")
+    xlabel("NOTE: Sample code shown here is available as a file provided with the PointerBuilder app. ")
+    xlabel(" ")
+    xlabel(helpseparator)
+
+    xlabel("3. Pointers in NMODL")
+    xlabel(helpseparator)
+    xlabel("The following NMODL code contains a POINTER: ")
+    xlabel(" ")
+    xlabel("NEURON {")
+    xlabel("    SUFFIX myMod1")
+    xlabel("    POINTER xPointer")
+    xlabel("}")
+    xlabel("")
+    xlabel("ASSIGNED { xPointer }")
+    xlabel(" ")
+    xlabel(helpseparator)
+
+    xlabel("4. State variables and parameters in NMODL")
+    xlabel(helpseparator)
+    xlabel("Each NMODL pointer can point to either a state variable or a parameter. ")
+    xlabel(" ")
+    xlabel("The following NMODL code demonstrates a state variable: ")
+    xlabel(" ")
+    xlabel("NEURON {")
+    xlabel("    SUFFIX myMod2")
+    xlabel("}")
+    xlabel("STATE { x }")
+    xlabel(" ")
+    xlabel("The following NMODL code demonstrates a parameter: ")
+    xlabel(" ")
+    xlabel("NEURON {")
+    xlabel("    SUFFIX myMod2")
+    xlabel("}")
+    xlabel("PARAMETER { x }")
+
+    xpanel(1)
+    helpbox.intercept(0)    //ends intercept mode
+    helpbox.map()       //draw the box and its contents
+}
+
+// Variable selection window
+objref variablebox
+strdef button_command
+proc variable_window() {
+    variablebox = new VBox()
+    variablebox.intercept(1)    //all following creations go into the box
+    xpanel("X", 0)
+    xlabel("Choose one of the following POINTER variables:")
+
+    // Remove leading spaces before first variable
+    while (strobj.substr(s, " ") == 0) {
+         strobj.right(s, 1)
+    }
+
+    // Loop while string has a comma
+    while (strobj.head(s, ",", variable) > -1) {
+         sprint(button_command, "pointer_name = \"%s\" variablebox.unmap()", variable)
+         xbutton(variable, button_command)
+         // Remove comma
+         index = strobj.substr(s, ",")
+         strobj.right(s, index + 1)
+         // Remove leading spaces before next variable
+         while (strobj.substr(s, " ") == 0) {
+              strobj.right(s, 1)
+         }
+    }
+
+    // Remove leading spaces before next variable
+    while (strobj.substr(s, " ") == 0) {
+         strobj.right(s, 1)
+    }
+    sprint(button_command, "pointer_name = \"%s\" variablebox.unmap()", s)
+    xbutton(s, button_command)
+
+    xpanel()
+    variablebox.intercept(0)    //ends intercept mode
+    variablebox.map()       //draw the box and its contents
+}

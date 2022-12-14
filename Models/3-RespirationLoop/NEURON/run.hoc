@@ -1,0 +1,24 @@
+// Documentation: https://github.com/fietkiewicz/PointerBuilder
+// Description: Closed-loop model of neural control for respiration.
+
+// Set up neuron
+create neuron
+access neuron
+insert na
+insert nap
+insert k
+insert leak
+insert syn
+cm = 22600 // Specific capacitance that approximates C = 21.
+
+// Set up respiration components
+create body
+access body
+insert respiration
+
+// Set pointer connections
+setpointer body.Vpointer_respiration(0.5), neuron.v(0.5)
+setpointer neuron.gtonicPointer_syn(0.5), body.gtonic_respiration(0.5)
+setpointer neuron.nPointer_na(0.5), neuron.n_k(0.5)
+
+load_file("graph.ses")

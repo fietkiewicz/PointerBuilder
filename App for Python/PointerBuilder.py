@@ -1,6 +1,5 @@
 '''
-PointerBuilder 1.0
-Author: Chris Fietkiewicz (fietkiewicz@hws.edu)
+Source: https://github.com/fietkiewicz/PointerBuilder
 Description: Utility for creating "setpointer" instructions in NEURON. See README.md for more details.
 '''
 
