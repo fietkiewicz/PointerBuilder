@@ -5,7 +5,7 @@ Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (submitted).
 
 Questions and comments can be addressed to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu).
 
-# Contents
+## Contents
 
 The repository contains the following sections, each with its own additional documentation:
 
