@@ -9,8 +9,8 @@ Questions and comments can be addressed to Dr. Chris Fietkiewicz (fietkiewicz@hw
 
 The repository contains the following sections, each with its own additional documentation:
 
-**App for NEURON:** This application is a NEURON graphical interface for working with NEURON pointers.
+* **App for NEURON:** This application is a NEURON graphical interface for working with NEURON pointers.
 
-**App for Python:** This application is a Python graphical interface for working with NEURON pointers.
+* **App for Python:** This application is a Python graphical interface for working with NEURON pointers.
 
-**Models:** This collection of NEURON models demonstrates various concepts for neuromechanical simulations using pointers, as detailed in the paper above (Fietkiewicz et al.).
+* **Models:** This collection of NEURON models demonstrates various concepts for neuromechanical simulations using pointers, as detailed in the paper above (Fietkiewicz et al.).
