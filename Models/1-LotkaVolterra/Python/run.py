@@ -1,6 +1,6 @@
 '''
 Documentation: https://github.com/fietkiewicz/PointerBuilder
-Description: Lotka-Volterra (predator/prey) system
+Description: Lotka-Volterra (predator/prey) system.
 '''
 
 from neuron import h

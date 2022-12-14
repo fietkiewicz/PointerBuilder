@@ -1,7 +1,6 @@
 '''
 Documentation: https://github.com/fietkiewicz/PointerBuilder
-Description: Neuromechanical, closed-loop model of a half-
-center oscillator coupled to a rudimentary motor system.
+Description: Neuromechanical, closed-loop model of a half-center oscillator coupled to a rudimentary motor system.
 '''
 
 from neuron import h
