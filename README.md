@@ -1,7 +1,7 @@
 # PointerBuilder
-PointerBuilder is a tool for working with pointers in NEURON simulations. Details are available in the following paper:
+PointerBuilder is a tool for working with pointers in NEURON simulations. Details will be available in the following paper:
 
-Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (submitted). NEURON Framework for Neuromechanical Simulation. *Frontiers in Computational Neuroscience*.
+Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. NEURON Framework for Neuromechanical Simulation. *Frontiers in Computational Neuroscience*. (in progress)
 
 Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu).
 
