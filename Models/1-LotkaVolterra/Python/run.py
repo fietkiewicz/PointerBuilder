@@ -1,5 +1,5 @@
 '''
-Source: https://github.com/fietkiewicz/PointerBuilder
+Documentation: https://github.com/fietkiewicz/PointerBuilder
 Description: Lotka-Volterra (predator/prey) system
 '''
 
