@@ -7,17 +7,18 @@ from neuron import h
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
+# Create section and insert mechanisms
 model = h.Section(name = 'model')
-model = h.Section(name = 'model')
-
 model.insert('brain')
 model.insert('body')
 
-h.setpointer(h._ref_L1_body, 'L1pointer', model(0.5).brain)
-h.setpointer(h._ref_L2_body, 'L2pointer', model(0.5).brain)
-h.setpointer(model(0.5)._ref_V1_brain, 'V1pointer', model(0.5).body)
-h.setpointer(model(0.5)._ref_V2_brain, 'V2pointer', model(0.5).body)
+# Set pointers
+model(0.5).brain._ref_L1pointer = h._ref_L1_body
+model(0.5).brain._ref_L2pointer = h._ref_L2_body
+model(0.5).body._ref_V1pointer = model(0.5).brain._ref_V1
+model(0.5).body._ref_V2pointer = model(0.5).brain._ref_V2
 
+# Record data for plots
 V1 = h.Vector().record(model(0.5)._ref_V1_brain)
 V2 = h.Vector().record(model(0.5)._ref_V2_brain)
 A1 = h.Vector().record(model(0.5)._ref_A1_body)
@@ -25,6 +26,7 @@ A2 = h.Vector().record(model(0.5)._ref_A2_body)
 x = h.Vector().record(model(0.5)._ref_x_body)
 t = h.Vector().record(h._ref_t)
 
+# Run simulation
 h.load_file('stdrun.hoc')
 h.init()
 h.cvode.active(True)
@@ -32,6 +34,7 @@ h.cvode.atol(1e-4)
 h.tstop = 4500.0
 h.run()
 
+# Plotting
 plt.figure(figsize=(6, 6))
 ax1 = plt.subplot(311)
 ax1.plot(t, V1, 'b-', label = 'model.V1_brain(0.5)')

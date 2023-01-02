@@ -11,17 +11,19 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 global a0, a1, a2, u0, u1, sw, t
 
 def init_and_run():
+    # Create section and insert mechanisms
     model = h.Section(name = 'model')
     model = h.Section(name = 'model')
-
     model.insert('brain')
     model.insert('body')
 
-    h.setpointer(model(0.5)._ref_a0_brain, 'a0Pointer', model(0.5).body)
-    h.setpointer(model(0.5)._ref_a1_brain, 'a1Pointer', model(0.5).body)
-    h.setpointer(model(0.5)._ref_a2_brain, 'a2Pointer', model(0.5).body)
-    h.setpointer(model(0.5)._ref_xr_body, 'xrPointer', model(0.5).brain)
+    # Set pointers
+    model(0.5).body._ref_a0Pointer = model(0.5).brain._ref_a0
+    model(0.5).body._ref_a1Pointer = model(0.5).brain._ref_a1
+    model(0.5).body._ref_a2Pointer = model(0.5).brain._ref_a2
+    model(0.5).brain._ref_xrPointer = model(0.5).body._ref_xr
 
+    # Record data for plots
     a0 = h.Vector().record(model(0.5)._ref_a0_brain)
     a1 = h.Vector().record(model(0.5)._ref_a1_brain)
     a2 = h.Vector().record(model(0.5)._ref_a2_brain)
@@ -40,14 +42,13 @@ def init_and_run():
     h.cvode.atol(1e-9)
     h.run()
 
-##    fig = Figure(figsize = (20, 10), dpi = 75)
+    # Plotting
     fig = Figure(figsize = (6, 5), dpi = 100)
     plt = fig.add_subplot(311)
     plt.plot(t, a0, "k-", label = "a0")
     plt.plot(t, a1, "b-", label = "a1")
     plt.plot(t, a2, "r-", label = "a2")
     plt.set_ylabel('Neural\nActivation')
-##    plt.set_title('"brain" state variables')
     plt.legend(loc = 'upper right', frameon = True)
     plt.axis([0, h.tstop, 0, 1.2])
 
@@ -56,7 +57,6 @@ def init_and_run():
     plt.plot(t, u1, "r-", label = "u1")
     plt.set_xlabel('time')
     plt.set_ylabel('Muscle\nActivation')
-##    plt.set_title('"body" state variable')
     plt.legend(loc = 'upper right', frameon = True)
     plt.axis([0, h.tstop, 0.1, 1])
 
@@ -65,8 +65,6 @@ def init_and_run():
     plt.set_xlabel('time (sec)')
     plt.set_ylabel('Seaweed\nPosition')
     plt.axis([0, h.tstop, -0.5, 3.8])
-##    plt.set_title('"body" state variable')
-##    plt.legend(loc = 'upper right', frameon = True)
 
     canvas = FigureCanvasTkAgg(fig, master = window)
     canvas.draw()
