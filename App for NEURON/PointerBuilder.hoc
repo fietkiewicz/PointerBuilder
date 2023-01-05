@@ -1,79 +1,158 @@
 // Source: https://github.com/fietkiewicz/PointerBuilder
 // Description: Utility for creating "setpointer" instructions in NEURON. See README.md for more details.
 
-objref box
-strdef pointer_mod, pointer_vars, pointer_section, source_mod, source_section
+objref vbox, vbox1a, vbox1b, vbox1c, vbox1d, hbox1, hbox2, hbox3, hbox4, hbox5
+objref vbox2a, vbox2b, vbox2c, vbox2d, vbox3
+
+mapHeight = 75
+
+objref pointer_mod, pointer_section, source_mod, source_section
+objref pointer_name, source_name
 strdef filename, line, s // Strings used for reading mod file
 objref file, strobj
 strobj = new StringFunctions()
-strdef pointer_name, source_name
 strdef separator1, separator2
 strdef variable // Next variable in POINTER list before a comma
+strdef default_text
 
-separator1 = "-------------------------------" // Text that appears between fields in each column
-separator2 = "--------------------------------------------" // Text that appears between fields in each column
-pointer_mod = "NOT ENTERED"
-pointer_name = "NOT ENTERED"
-pointer_section = "NOT ENTERED"
-source_mod = "NOT ENTERED"
-source_name = "NOT ENTERED"
-source_section = "NOT ENTERED"
+default_text = "NOT ENTERED"
 
 type = 1 // Source type (1 = state variable, 2 = parameter)
 
-box = new HBox()
-box.intercept(1)	//all following creations go into the "vbox" box
+vbox = new VBox()
+vbox.intercept(1)
 
-xpanel("A", 0)
-xlabel("       Pointer Settings")
-xlabel(separator1)
-xlabel("NMODL file with pointer:")
-xvarlabel(pointer_mod)
-xbutton("Edit", "string_dialog(\"Enter name of NMODL file with pointer:\", pointer_mod)")
-xbutton("Choose file", "get_pointer_mod()")
-xlabel(separator1)
-xlabel("Name of pointer variable:")
-xvarlabel(pointer_name)
-xbutton("Edit", "string_dialog(\"Enter pointer variable names:\", pointer_name)")
-xlabel(separator1)
-xlabel("Section name with pointer:")
-xvarlabel(pointer_section)
-xbutton("Edit", "string_dialog(\"Enter pointer section name:\", pointer_section)")
+hbox4 = new HBox()
+hbox4.intercept(1)
+xpanel("############")
+xlabel("Pointer Settings")
 xpanel()
+hbox4.intercept(0)
+hbox4.map()
 
-xpanel("B", 0)
-xlabel("        State/parameter Settings")
-xlabel(separator2)
-xlabel("NMODL file with state/parameter:")
-xvarlabel(source_mod)
-xbutton("Edit", "string_dialog(\"Enter section name with source variable or parameter:\", source_mod)")
-xbutton("Choose file", "get_source_mod()")
-xlabel(separator2)
+hbox1 = new HBox()
+hbox1.intercept(1)
+vbox1a = new VBox()
+vbox1a.intercept(1)
+xpanel("############")
+xlabel("NMODL file:")
+xpanel()
+pointer_mod = new TextEditor(default_text, 1, 30)
+pointer_mod.map()
+xpanel("", 0)
+xbutton("            Read .mod file           ", "print pointer_mod.text()")
+xpanel()
+vbox1a.intercept(0)
+vbox1a.map("", 0, 0, 200, mapHeight)
+
+vbox1b = new VBox()
+vbox1b.intercept(1)
+xpanel("")
+xlabel("Name of pointer:")
+xpanel()
+pointer_name = new TextEditor(default_text, 1, 30)
+pointer_name.map()
+vbox1b.intercept(0)
+vbox1b.map("", 0, 0, 200, mapHeight)
+
+vbox1c = new VBox()
+vbox1c.intercept(1)
+xpanel("")
+xlabel("Section name:")
+xpanel()
+pointer_section = new TextEditor(default_text, 1, 30)
+pointer_section.map()
+vbox1c.intercept(0)
+vbox1c.map("", 0, 0, 200, mapHeight)
+
+vbox1d = new VBox()
+vbox1d.intercept(1)
+vbox1d.intercept(0)
+vbox1d.map("", 0, 0, 200, mapHeight)
+
+hbox1.intercept(0)
+hbox1.map("", 0, 0, 600, mapHeight)
+
+hbox5 = new HBox()
+hbox5.intercept(1)
+xpanel("############")
+xlabel("State/Parameter Settings")
+xpanel()
+hbox5.intercept(0)
+hbox5.map()
+
+hbox2 = new HBox()
+hbox2.intercept(1)
+vbox2a = new VBox()
+vbox2a.intercept(1)
+xpanel("")
+xlabel("NMODL file:")
+xpanel()
+source_mod = new TextEditor(default_text, 1, 30)
+source_mod.map()
+xpanel("")
+xbutton("            Read .mod file           ", "print \"button clicked\"")
+xpanel()
+vbox2a.intercept(0)
+vbox2a.map("", 0, 0, 200, mapHeight)
+
+vbox2b = new VBox()
+vbox2b.intercept(1)
+xpanel("")
 xlabel("Name of state/parameter:")
-xvarlabel(source_name)
-xbutton("Edit", "string_dialog(\"Enter section name with source variable or parameter:\", source_name)")
-xlabel(separator2)
-xlabel("Section name with state/parameter:")
-xvarlabel(source_section)
-xbutton("Edit", "string_dialog(\"Enter section name with source variable or parameter:\", source_section)")
-xlabel(separator2)
+xpanel()
+source_name = new TextEditor(default_text, 1, 30)
+source_name.map()
+vbox2b.intercept(0)
+vbox2b.map("", 0, 0, 200, mapHeight)
+
+vbox2c = new VBox()
+vbox2c.intercept(1)
+xpanel("")
+xlabel("Section name:")
+xpanel()
+source_section = new TextEditor(default_text, 1, 30)
+source_section.map()
+vbox2c.intercept(0)
+vbox2c.map("", 0, 0, 200, mapHeight)
+
+vbox2d = new VBox()
+vbox2d.intercept(1)
+xpanel("")
 xlabel("Type:")
-xradiobutton("State variable", "radio_state()", 1)
-xradiobutton("Parameter", "radio_parameter()")
+xradiobutton("State variable", "print \"Radio button clicked\"", 1)
+xradiobutton("Parameter", "print \"Radio button clicked\"")
+xlabel("")
+xlabel("")
+xlabel("")
 xpanel()
+vbox2d.intercept(0)
+vbox2d.map("", 0, 0, 200, mapHeight)
 
-xpanel("C", 0)
-xlabel("         Actions")
-xlabel("--------------------------")
-xbutton("    Make .hoc file     ", "make_hoc_file()")
+hbox2.intercept(0)
+hbox2.map("", 0, 0, 800, mapHeight)
+
+vbox3 = new VBox()
+vbox3.intercept(1)
+xpanel("")
+xlabel("Actions")
+xpanel()
+xpanel("", 1)  // easy horizontal
 xbutton("View hoc command", "view_window()")
-xbutton("    Save settings     ", "save_settings()")
-xbutton("    Load settings     ", "load_settings()")
-xbutton("            Help            ", "help_window()")
-xpanel()
+xbutton("Make .hoc file", "make_hoc_file()")
+xbutton("Save settings", "save_settings()")
+xbutton("Load settings", "load_settings()")
+xbutton("Help", "help_window()")
 
-box.intercept(0)	//ends intercept mode
-box.map()		//draw the box and its contents
+xpanel()
+vbox3.intercept(0)
+vbox3.map()
+
+vbox.intercept(0)
+vbox.map("Pointer Builder", 0, 0, 800, 310)
+
+// Functions
+
 
 // Set type as state variable
 proc radio_state() {
@@ -93,12 +172,12 @@ proc save_settings() {
     file.chooser("w", "Save settings: Select file or", "", "Save")
     if (file.chooser()) {
         file.wopen(file.getname())
-        file.printf("%s\n", pointer_section)
-        file.printf("%s\n", pointer_name)
-        file.printf("%s\n", pointer_mod)
-        file.printf("%s\n", source_section)
-        file.printf("%s\n", source_name)
-        file.printf("%s\n", source_mod)
+        file.printf("%s\n", pointer_section.text())
+        file.printf("%s\n", pointer_name.text())
+        file.printf("%s\n", pointer_mod.text())
+        file.printf("%s\n", source_section.text())
+        file.printf("%s\n", source_name.text())
+        file.printf("%s\n", source_mod.text())
         // Cleanup
         file.flush()
         file.close()
@@ -112,22 +191,22 @@ proc load_settings() {
     if (file.chooser()) {
         file.gets(line)
         strobj.left(line, strobj.len(line) - 1) // Remove newline
-        pointer_section = line
+        pointer_section.text(line)
         file.gets(line)
         strobj.left(line, strobj.len(line) - 1) // Remove newline
-        pointer_name = line
+        pointer_name.text(line)
         file.gets(line)
         strobj.left(line, strobj.len(line) - 1) // Remove newline
-        pointer_mod = line
+        pointer_mod.text(line)
         file.gets(line)
         strobj.left(line, strobj.len(line) - 1) // Remove newline
-        source_section = line
+        source_section.text(line)
         file.gets(line)
         strobj.left(line, strobj.len(line) - 1) // Remove newline
-        source_name = line
+        source_name.text(line)
         file.gets(line)
         strobj.left(line, strobj.len(line) - 1) // Remove newline
-        source_mod = line
+        source_mod.text(line)
         file.close()
     }
 }
@@ -151,7 +230,6 @@ proc get_pointer_mod() {
         }
         file.close()
         strobj.left(s, strobj.len(s) - 1) // Remove newline
-        pointer_vars = s
         variable_window()
     }
 }
@@ -176,10 +254,10 @@ proc make_hoc_file() {
         file.wopen(file.getname())
         if (type == 1) {
             // Use syntax for state variable
-            file.printf("setpointer %s.%s_%s(0.5), %s.%s_%s(0.5)\n", pointer_section, pointer_name, pointer_mod, source_section, source_name, source_mod)
+            file.printf("setpointer %s.%s_%s(0.5), %s.%s_%s(0.5)\n", pointer_section.text(), pointer_name.text(), pointer_mod.text(), source_section.text(), source_name.text(), source_mod.text())
         } else {
             // Use syntax for parameter
-            file.printf("setpointer %s.%s_%s(0.5), %s_%s", pointer_section, pointer_name, pointer_mod, source_name, source_mod)
+            file.printf("setpointer %s.%s_%s(0.5), %s_%s", pointer_section.text(), pointer_name.text(), pointer_mod.text(), source_name.text(), source_mod.text())
         }
         // Cleanup
         file.flush()
@@ -199,10 +277,10 @@ proc view_window() {
     strdef output
     if (type == 1) {
         // Use syntax for state variable
-        sprint(output, "setpointer %s.%s_%s(0.5), %s.%s_%s(0.5)", pointer_section, pointer_name, pointer_mod, source_section, source_name, source_mod)
+        sprint(output, "setpointer %s.%s_%s(0.5), %s.%s_%s(0.5)", pointer_section.text(), pointer_name.text(), pointer_mod.text(), source_section.text(), source_name.text(), source_mod.text())
     } else {
         // Use syntax for parameter
-        sprint(output, "setpointer %s.%s_%s(0.5), %s_%s", pointer_section, pointer_name, pointer_mod, source_name, source_mod)
+        sprint(output, "setpointer %s.%s_%s(0.5), %s_%s", pointer_section.text(), pointer_name.text(), pointer_mod.text(), source_name.text(), source_mod.text())
     }
     xlabel(output)
     xlabel(" ")
@@ -234,7 +312,7 @@ proc help_window() {
     xlabel("1. Description ")
     xlabel(helpseparator)
     xlabel("PointerBuilder.hoc is a tool that assists the user in constructing a 'setpointer' statement. Additional support is available at this site: ")
-    xlabel("                                                                          https://tinyurl.com/pointerbuilder ")
+    xlabel("                                                                       https://github.com/fietkiewicz/PointerBuilder ")
     xlabel("")
     xlabel("The following are required fields. (See code examples in the sections that follow.)")
     xlabel("1. NMODL file with pointer: ")
