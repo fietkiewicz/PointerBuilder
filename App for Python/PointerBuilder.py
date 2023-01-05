@@ -1,6 +1,6 @@
 '''
 Source: https://github.com/fietkiewicz/PointerBuilder
-Description: Utility for creating "setpointer" instructions in NEURON. See README.md for more details.
+Description: Utility for pointers for NEURON simulations. See README.md for more details.
 '''
 
 import os
@@ -46,14 +46,6 @@ def set_pointer_mod(filepath, variable):
     ent_pointer.delete(0, 'end') # Clear text
     ent_pointer.insert(0, variable)
 
-# NOTE: Need to somehow pass frame so that window can be closed, but it doesn't work.
-##def set_pointer_mod(frame, filepath, variable):
-##    global ent_pointer, ent_pointer_mod
-##    file_name = os.path.basename(filepath)
-##    ent_pointer_mod.insert(0, os.path.splitext(file_name)[0])
-##    ent_pointer.insert(0, variable)
-##    frame.destroy()
-
 def close_read_pointer_mod(frame):
     frame.destroy()
     read_pointer_mod()
@@ -70,7 +62,6 @@ def read_source_mod():
         file_name = os.path.basename(filepath)
         ent_source_mod.insert(0, os.path.splitext(file_name)[0])
 
-# ****************** NOT UPDATED ***************
 def make_py():
     filepath = asksaveasfilename(
         defaultextension=".py",
@@ -78,58 +69,47 @@ def make_py():
     )
     if not filepath:
         return
+    if (typeSelect.get() == 0): # State variable
+        commandText = ent_pointer_cell.get() + "(0.5)." + \
+                      ent_pointer_mod.get() + "." + \
+                      "_ref_" + ent_pointer.get() + " = " + \
+                      ent_source_cell.get() + "(0.5)." + \
+                      ent_source_mod.get() + "." + \
+                      "_ref_" + ent_source.get()
+    else: # Parameter
+        commandText = ent_pointer_cell.get() + "(0.5)." + \
+                      ent_pointer_mod.get() + "." + \
+                      "_ref_" + ent_pointer.get() + " = " + \
+                      "h._ref_" + ent_source.get() + "_" + \
+                      ent_source_mod.get()
     with open(filepath, mode="w", encoding="utf-8") as py_file:
-        py_file.write("from neuron import h\n")
-        py_file.write("\n")
-        for i in range(1, r):
-            if (frm_pointer.grid_slaves(row=i, column=3)[0].var.get()):
-                py_file.write(frm_pointer.grid_slaves(row=i, column=2)[0].get() +
-                              "= h.Section(name = '"+
-                              frm_pointer.grid_slaves(row=i, column=2)[0].get() + "')\n")
-                py_file.write(frm_pointer.grid_slaves(row=i, column=2)[0].get() + ".insert('" +
-                              frm_pointer.grid_slaves(row=i, column=1)[0].get() + "')\n")
-                py_file.write("\n")
-
-            if (frm_pointer.grid_slaves(row=i, column=6)[0].var2.get()):
-                py_file.write(frm_pointer.grid_slaves(row=i, column=5)[0].get() +
-                              "= h.Section(name = '"+
-                              frm_pointer.grid_slaves(row=i, column=5)[0].get() + "')\n")
-                py_file.write(frm_pointer.grid_slaves(row=i, column=5)[0].get() + ".insert('" +
-                              frm_pointer.grid_slaves(row=i, column=4)[0].get() + "')\n")
-                py_file.write("\n")
-
-        for i in range(1, r):
-            py_file.write("h.setpointer(" + frm_pointer.grid_slaves(row=i, column=5)[0].get() +
-                          "(0.5)._ref_" + frm_pointer.grid_slaves(row=i, column=0)[0].get() +
-                          "_" + frm_pointer.grid_slaves(row=i, column=4)[0].get() +
-                          ", '" + frm_pointer.grid_slaves(row=i, column=0)[0].get() + "'" +
-                          ", " + frm_pointer.grid_slaves(row=i, column=2)[0].get() +
-                          "(0.5)." + frm_pointer.grid_slaves(row=i, column=1)[0].get() + ")\n")
+        py_file.write(commandText)
 
 def view_command():
     '''
+    Format: section(position).mechanism._ref_variable
     Examples:
-    h.setpointer(h._ref_L1_body, 'L1pointer', model(0.5).brain)
-    h.setpointer(model(0.5)._ref_V1_brain, 'V1pointer', model(0.5).body)
+    model(0.5).body._ref_V1pointer = model(0.5).brain._ref_V1
+    model(0.5).brain._ref_L1pointer = h._ref_L1_body
     '''
     global window
     foundPointer = False # Remember whether a POINTER statement was found
     frame = tk.Toplevel(window)
-    frame.title("Python 'setpointer' Command")
+    frame.title("Python pointer command")
     if (typeSelect.get() == 0): # State variable
-        commandText = "h.setpointer(" + ent_source_cell.get() + \
-                      "(0.5)._ref_" + ent_source.get() + \
-                      "_" + ent_source_mod.get() + \
-                      ", '" + ent_pointer.get() + "'" + \
-                      ", " + ent_pointer_cell.get() + \
-                      "(0.5)." + ent_pointer_mod.get() + ")"
+        commandText = ent_pointer_cell.get() + "(0.5)." + \
+                      ent_pointer_mod.get() + "." + \
+                      "_ref_" + ent_pointer.get() + " = " + \
+                      ent_source_cell.get() + "(0.5)." + \
+                      ent_source_mod.get() + "." + \
+                      "_ref_" + ent_source.get()
     else: # Parameter
-        commandText = "h.setpointer(h._ref_" + ent_source.get() + \
-                      "_" + ent_source_mod.get() + \
-                      ", '" + ent_pointer.get() + "'" + \
-                      ", " + ent_pointer_cell.get() + \
-                      "(0.5)." + ent_pointer_mod.get() + ")"
-    make_widget(frame, "label", 0, 0, "Copy the following setpointer command:", setWidth = 70)
+        commandText = ent_pointer_cell.get() + "(0.5)." + \
+                      ent_pointer_mod.get() + "." + \
+                      "_ref_" + ent_pointer.get() + " = " + \
+                      "h._ref_" + ent_source.get() + "_" + \
+                      ent_source_mod.get()
+    make_widget(frame, "label", 0, 0, "Copy the following pointer command:", setWidth = 70)
     make_widget(frame, "entry", 1, 0, commandText, setWidth = 70)
 
 def save_settings():
@@ -184,15 +164,13 @@ def do_nothing():
     # Do nothing. This is used as a default argument for make_widget.
     nothing = 0
 
-# ****************** Need text ***************
 def help_screen():
     global window
     new = tk.Toplevel(window)
-##    new.geometry("750x250")
     new.title("Pointer Builder Help")
     text = tk.Text(new, wrap = tk.WORD)
     text.pack()
-    text.insert(tk.INSERT, "THIS FEATURE HAS NOT BEEN COMPLETED.")
+    text.insert(tk.INSERT, "PointerBuilder.py is a tool that assists the user in using pointers for NEURON simulations. It creates a pointer assignment statement with the correct syntax. Additional support is available at this site: \n\nhttps://github.com/fietkiewicz/PointerBuilder")
     text.configure(state = tk.DISABLED)
 
 def make_widget(frame, widgetType, setRow, setColumn, setText, setSticky = 'w', setCommand = do_nothing, setRadio = 0, setWidth = 18):
