@@ -3,7 +3,7 @@
 
 NEURON {
    SUFFIX brain
-   POINTER L1pointer, L2pointer
+   POINTER L1Pointer, L2Pointer
 }
 
 PARAMETER {
@@ -34,7 +34,7 @@ PARAMETER {
 }
 
 ASSIGNED {
-   L1pointer L2pointer
+   L1Pointer L2Pointer
    minf1 minf2 winf1 winf2 tauw1 tauw2
    sinffw1 sinffw2 sinffb1 sinffb2
    Isyn1 Isyn2 Ifb1 Ifb2
@@ -64,8 +64,8 @@ DERIVATIVE states {
    sinffw1 = 0.5*(1+tanh((V1-Ethresh)/Eslope))
    sinffw2 = 0.5*(1+tanh((V2-Ethresh)/Eslope))
 
-   sinffb1 = 1-0.5*tanh((L1pointer-x10)/Lslope)  ::1-0.5*tanh((L1pointer-x10)/Lslope) for contraction; 0.5*(1+tanh(L1pointer-x10)/Lslope) for stretching
-   sinffb2 = 1-0.5*tanh((L2pointer-x10)/Lslope)  ::1-0.5*tanh((L2pointer-x10)/Lslope) for contraction; 0.5*(1+tanh(L2pointer-x10)/Lslope) for stretching
+   sinffb1 = 1-0.5*tanh((L1Pointer-x10)/Lslope)  ::1-0.5*tanh((L1Pointer-x10)/Lslope) for contraction; 0.5*(1+tanh(L1Pointer-x10)/Lslope) for stretching
+   sinffb2 = 1-0.5*tanh((L2Pointer-x10)/Lslope)  ::1-0.5*tanh((L2Pointer-x10)/Lslope) for contraction; 0.5*(1+tanh(L2Pointer-x10)/Lslope) for stretching
 
    Isyn1 = gsyn*sinffw2*(V1-Esyn)
    Isyn2 = gsyn*sinffw1*(V2-Esyn)

@@ -8,10 +8,10 @@ insert brain
 insert body
 
 // Set pointers
-setpointer model.L1pointer_brain(0.5), L1_body
-setpointer model.L2pointer_brain(0.5), L2_body
-setpointer model.V1pointer_body(0.5), model.V1_brain(0.5)
-setpointer model.V2pointer_body(0.5), model.V2_brain(0.5)
+setpointer model.L1Pointer_brain(0.5), L1_body
+setpointer model.L2Pointer_brain(0.5), L2_body
+setpointer model.V1Pointer_body(0.5), model.V1_brain(0.5)
+setpointer model.V2Pointer_body(0.5), model.V2_brain(0.5)
 
 // Load run controls and graph window
 load_file("graph.ses")

@@ -12,11 +12,11 @@ model = h.Section(name = 'model')
 model.insert('brain')
 model.insert('body')
 
-# Set pointers
-model(0.5).brain._ref_L1pointer = h._ref_L1_body
-model(0.5).brain._ref_L2pointer = h._ref_L2_body
-model(0.5).body._ref_V1pointer = model(0.5).brain._ref_V1
-model(0.5).body._ref_V2pointer = model(0.5).brain._ref_V2
+# Set Pointers
+model(0.5).brain._ref_L1Pointer = h._ref_L1_body
+model(0.5).brain._ref_L2Pointer = h._ref_L2_body
+model(0.5).body._ref_V1Pointer = model(0.5).brain._ref_V1
+model(0.5).body._ref_V2Pointer = model(0.5).brain._ref_V2
 
 # Record data for plots
 V1 = h.Vector().record(model(0.5)._ref_V1_brain)

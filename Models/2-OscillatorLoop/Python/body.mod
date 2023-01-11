@@ -3,7 +3,7 @@
 
 NEURON {
    SUFFIX body
-   POINTER V1pointer, V2pointer
+   POINTER V1Pointer, V2Pointer
 }
 
 PARAMETER {
@@ -18,7 +18,7 @@ PARAMETER {
 }
 
 ASSIGNED {
-   V1pointer V2pointer
+   V1Pointer V2Pointer
    u1 u2 U1 U2 LT1 LT2
    a1 F1 a2 F2
 }
@@ -39,8 +39,8 @@ DERIVATIVE states {
    L1 = 50+0.8*x
    L2 = 50-0.8*x
 
-   u1 = (1/2)*V1pointer
-   u2 = (1/2)*V2pointer
+   u1 = (1/2)*V1Pointer
+   u2 = (1/2)*V2Pointer
    U1 = (1.03-4.31*exp(-0.198*u1))*(u1>=8)
    U2 = (1.03-4.31*exp(-0.198*u2))*(u2>=8)
    LT1 = -5.27*10^(-4)*L1^2+0.1054*L1-4.27
