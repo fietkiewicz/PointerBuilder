@@ -34,8 +34,7 @@ def read_pointer_mod():
         if (foundPointer == False):
             error_message = make_widget(frame, "label", 0, 0, "Error: No POINTER statement found.", setSticky = 'we', setWidth = 1000)
             error_message.configure(pady = 20, fg = "red")
-            # WARNING: the "Try again" button does not work! For unknown reasons, the function is immediately called!
-            make_widget(frame, "button", 1, 0, "Try again", setSticky = 'we', setCommand = close_read_pointer_mod(frame), setWidth = 20)
+            make_widget(frame, "button", 1, 0, "Try again", setSticky = 'we', setCommand = lambda: close_read_pointer_mod(frame), setWidth = 20)
             make_widget(frame, "button", 2, 0, "Close", setSticky = 'we', setCommand = lambda: frame.destroy(), setWidth = 20)
 
 def set_pointer_mod(filepath, variable):
