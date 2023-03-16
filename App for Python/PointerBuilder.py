@@ -20,18 +20,16 @@ def read_pointer_mod():
         return
     with open(filepath, mode = "r", encoding = "utf-8") as mod_file:
         global window
-        foundPointer = False # Remember whether a POINTER statement was found
         frame = tk.Toplevel(window)
         frame.title("Pointer Variables")
         for line in mod_file.readlines():
             if ("POINTER" in line):
-                foundPointer = True
                 new_line = remove_spaces(line).strip()
                 variables = new_line[7:].split(",")
                 for i in range(len(variables)):
                     make_widget(frame, "button", i, 0, variables[i], setSticky = 'we', setCommand = partial(set_pointer_mod, filepath, variables[i]), setWidth = 20)
                 break
-        if (foundPointer == False):
+        else:
             error_message = make_widget(frame, "label", 0, 0, "Error: No POINTER statement found.", setSticky = 'we', setWidth = 1000)
             error_message.configure(pady = 20, fg = "red")
             make_widget(frame, "button", 1, 0, "Try again", setSticky = 'we', setCommand = lambda: close_read_pointer_mod(frame), setWidth = 20)
