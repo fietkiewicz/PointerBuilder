@@ -161,7 +161,7 @@ def remove_spaces(string):
 
 def do_nothing():
     # Do nothing. This is used as a default argument for make_widget.
-    nothing = 0
+    pass
 
 def help_screen():
     global window
