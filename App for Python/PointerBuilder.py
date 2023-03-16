@@ -8,7 +8,6 @@ import csv
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from functools import partial
-from tkinter.ttk import Label, Style
 
 column = 0 # Column index
 
