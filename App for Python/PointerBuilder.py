@@ -8,7 +8,6 @@ import csv
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from functools import partial
-from tkinter.ttk import Label, Style
 
 column = 0 # Column index
 
@@ -19,27 +18,22 @@ def read_pointer_mod():
     if not filepath:
         return
     with open(filepath, mode = "r", encoding = "utf-8") as mod_file:
-        global window
-        foundPointer = False # Remember whether a POINTER statement was found
         frame = tk.Toplevel(window)
         frame.title("Pointer Variables")
         for line in mod_file.readlines():
             if ("POINTER" in line):
-                foundPointer = True
                 new_line = remove_spaces(line).strip()
                 variables = new_line[7:].split(",")
                 for i in range(len(variables)):
                     make_widget(frame, "button", i, 0, variables[i], setSticky = 'we', setCommand = partial(set_pointer_mod, filepath, variables[i]), setWidth = 20)
                 break
-        if (foundPointer == False):
+        else:
             error_message = make_widget(frame, "label", 0, 0, "Error: No POINTER statement found.", setSticky = 'we', setWidth = 1000)
             error_message.configure(pady = 20, fg = "red")
-            # WARNING: the "Try again" button does not work! For unknown reasons, the function is immediately called!
-            make_widget(frame, "button", 1, 0, "Try again", setSticky = 'we', setCommand = close_read_pointer_mod(frame), setWidth = 20)
+            make_widget(frame, "button", 1, 0, "Try again", setSticky = 'we', setCommand = lambda: close_read_pointer_mod(frame), setWidth = 20)
             make_widget(frame, "button", 2, 0, "Close", setSticky = 'we', setCommand = lambda: frame.destroy(), setWidth = 20)
 
 def set_pointer_mod(filepath, variable):
-    global ent_pointer, ent_pointer_mod
     ent_pointer_mod.delete(0, 'end') # Clear text
     file_name = os.path.basename(filepath)
     ent_pointer_mod.insert(0, os.path.splitext(file_name)[0])
@@ -57,7 +51,6 @@ def read_source_mod():
     if not filepath:
         return
     with open(filepath, mode = "r", encoding = "utf-8") as mod_file:
-        global ent_source_mod
         ent_source_mod.delete(0, 'end') # Clear text
         file_name = os.path.basename(filepath)
         ent_source_mod.insert(0, os.path.splitext(file_name)[0])
@@ -92,8 +85,6 @@ def view_command():
     model(0.5).body._ref_V1pointer = model(0.5).brain._ref_V1
     model(0.5).brain._ref_L1pointer = h._ref_L1_body
     '''
-    global window
-    foundPointer = False # Remember whether a POINTER statement was found
     frame = tk.Toplevel(window)
     frame.title("Python pointer command")
     if (typeSelect.get() == 0): # State variable
@@ -113,7 +104,6 @@ def view_command():
     make_widget(frame, "entry", 1, 0, commandText, setWidth = 70)
 
 def save_settings():
-    global ent_pointer_mod, ent_pointer, ent_pointer_cell, ent_source_mod, ent_source, ent_source_cell, typeSelect
     filepath = asksaveasfilename(
         defaultextension=".py",
         filetypes=[("CSV Files", "*.csv"), ("All Files", "*.*")],
@@ -122,18 +112,17 @@ def save_settings():
         return
     with open(filepath, "w", encoding = "utf-8") as settings_file:
         writer = csv.writer(settings_file)
-        data = []
-        data.append(ent_pointer_mod.get())
-        data.append(ent_pointer.get())
-        data.append(ent_pointer_cell.get())
-        data.append(ent_source_mod.get())
-        data.append(ent_source.get())
-        data.append(ent_source_cell.get())
-        data.append(str(typeSelect.get()))
-        writer.writerow(data)
+        writer.writerow([
+            ent_pointer_mod.get(),
+            ent_pointer.get(),
+            ent_pointer_cell.get(),
+            ent_source_mod.get(),
+            ent_source.get(),
+            ent_source_cell.get(),
+            str(typeSelect.get())
+        ])
 
 def load_settings():
-    global ent_pointer_mod, ent_pointer, ent_pointer_cell, ent_source_mod, ent_source, ent_source_cell, typeSelect
     filepath = askopenfilename(
         filetypes = [("CSV Files", "*.csv"), ("All files", "*.*")]
     )
@@ -162,10 +151,9 @@ def remove_spaces(string):
 
 def do_nothing():
     # Do nothing. This is used as a default argument for make_widget.
-    nothing = 0
+    pass
 
 def help_screen():
-    global window
     new = tk.Toplevel(window)
     new.title("Pointer Builder Help")
     text = tk.Text(new, wrap = tk.WORD)
@@ -176,8 +164,6 @@ def help_screen():
 def make_widget(frame, widgetType, setRow, setColumn, setText, setSticky = 'w', setCommand = do_nothing, setRadio = 0, setWidth = 18):
     fontSize = 20
     fontName = 'Arial'
-
-    global typeSelect # Value of raidobutton for selecting variabel type (state or parameter)
 
     if (widgetType == "label"):
         obj = tk.Label(master = frame, text = setText, font = (fontName, fontSize))
