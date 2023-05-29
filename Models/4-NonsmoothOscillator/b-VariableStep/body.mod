@@ -3,7 +3,6 @@
 
 NEURON {
   SUFFIX body :: Name for mechanism
-  NONSPECIFIC_CURRENT b :: Required for equation in BREAKPOINT block
 }
 
 PARAMETER {
@@ -13,10 +12,14 @@ PARAMETER {
 
 STATE { b }
 
-INITIAL {
-  b = 1.0  :: Drive mechanism
+BREAKPOINT {
+  SOLVE states METHOD derivimplicit
 }
 
-BREAKPOINT {
-  b = b0 * cos(w * t) :: Algebraic equation
+INITIAL {
+  b = 1.0 :: Set initial value of state variable.
+}
+
+DERIVATIVE states {
+  b' = -b0 * w * sin(w * t)
 }

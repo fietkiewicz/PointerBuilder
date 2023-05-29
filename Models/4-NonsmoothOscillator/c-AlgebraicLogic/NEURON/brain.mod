@@ -19,11 +19,11 @@ INITIAL {
 }
 
 DERIVATIVE states {
-  a' = compute()
+  a' = da_dt()
 }
 
-FUNCTION compute() {
-  LOCAL da_dt : Derivative
-  da_dt = a * (1 - a) - bPointer
-  compute = (a > 0) * da_dt + (a <= 0) * (da_dt >= 0) * da_dt
+FUNCTION da_dt() {
+  LOCAL rhs : Right hand side of equation
+  rhs = a * (1 - a) - bPointer
+  da_dt = (a > 0) * rhs + (a <= 0) * (rhs >= 0) * rhs
 }

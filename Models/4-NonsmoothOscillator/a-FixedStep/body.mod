@@ -2,20 +2,24 @@
 : Description: Pedagogical model of a nonsmooth brain/body system.
 
 NEURON {
-  SUFFIX body :: Custom name for mechanism
+  SUFFIX body :: Name for mechanism
 }
 
-PARAMETER {   :: Declare and set any parameters required for this mod file here.
+PARAMETER {
   b0 = 1.0  :: Scaling parameter
   w = 0.628 :: Frequency parameter
 }
 
-STATE { b } :: State variable
-
-INITIAL {
-  b = 1.0  :: Drive mechanism
-}
+STATE { b }
 
 BREAKPOINT {
-  b = b0 * cos(w * t) :: Algebraic equation
+  SOLVE states METHOD derivimplicit
+}
+
+INITIAL {
+  b = 1.0 :: Set initial value of state variable.
+}
+
+DERIVATIVE states {
+  b' = -b0 * w * sin(w * t)
 }

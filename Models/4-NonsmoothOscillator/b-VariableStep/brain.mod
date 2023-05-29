@@ -20,15 +20,15 @@ INITIAL {
 
 DERIVATIVE states {
   :: Avoid writing logical conditioning in DERIVATIVE block
-  a' = compute()
+  a' = da_dt()
 }
 
-FUNCTION compute() {
-  LOCAL da_dt : Derivative
-  da_dt = a * (1 - a) - bPointer
-  if (a > 0 || da_dt >= 0) {
-    compute = da_dt
+FUNCTION da_dt() {
+  LOCAL rhs : Right hand side of equation
+  rhs = a * (1 - a) - bPointer
+  if (a > 0 || rhs >= 0) {
+    da_dt = rhs
   } else {
-    compute = 0
+    da_dt = 0
   }
 }
