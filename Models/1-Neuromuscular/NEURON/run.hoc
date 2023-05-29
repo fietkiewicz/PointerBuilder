@@ -1,0 +1,35 @@
+// Documentation: https://github.com/fietkiewicz/PointerBuilder
+// Description: Muscle with calcium dynamics and neural activation.
+// Notes:
+//   The muscle model is adapted from the following paper:
+//   Kim H. Linking Motoneuron PIC Location to Motor Function in Closed-Loop Motor Unit System Including Afferent
+//   Feedback: A Computational Investigation. eNeuro. 2020 Apr 27;7(2)
+//   On ModelDB: https://senselab.med.yale.edu/ModelDB/ShowModel?model=266732
+
+// Create neuron model
+load_file("nrngui.hoc")
+create cell
+access cell
+insert hh
+
+// Create stimulus for neuron
+objref ns, syn, nc
+ns = new NetStim(0.5)
+ns.interval = 100
+syn = new ExpSyn(0.5)
+nc = new NetCon(ns, syn, 0, 0, 2.0)
+
+// Create muscle model
+create muscle
+access muscle
+objref calciumObject, forceObject
+calciumObject = new calcium(0.5)
+forceObject = new force(0.5)
+
+// Set pointer
+setpointer calciumObject.vPointer, cell.v(0.5)
+setpointer forceObject.aPointer, calciumObject.A
+setpointer forceObject.xmPointer, calciumObject.xm
+
+// Load run controls and graph window
+xopen("graph.ses")
