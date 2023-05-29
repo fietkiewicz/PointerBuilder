@@ -13,7 +13,6 @@ global a0, a1, a2, u0, u1, sw, t
 def init_and_run():
     # Create section and insert mechanisms
     model = h.Section(name = 'model')
-    model = h.Section(name = 'model')
     model.insert('brain')
     model.insert('body')
 
