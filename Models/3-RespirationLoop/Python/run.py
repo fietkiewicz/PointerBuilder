@@ -22,7 +22,8 @@ neuron(0.5).cm = 22600 # Specific capacitance that approximates C = 21.
 
 # Set pointers
 body(0.5).respiration._ref_Vpointer = neuron(0.5)._ref_v
-neuron(0.5).syn._ref_gtonicPointer = body(0.5).respiration._ref_gtonic
+neuron(0.5).syn._ref_gtonicPointer = \
+    body(0.5).respiration._ref_gtonic
 neuron(0.5).na._ref_nPointer = neuron(0.5).k._ref_n
 
 # Record data for plots
