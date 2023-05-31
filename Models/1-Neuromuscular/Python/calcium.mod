@@ -11,8 +11,8 @@ NEURON {
 	POINTER vPointer
 
 	RANGE k1, k2, k3, k4, k5, k6, k, k5i, k6i
-	RANGE Umax, Rmax, t1, t2, R, vth, U
-	RANGE phi0, phi1, phi2, phi3, phi4, phi
+	RANGE Umax, Rmax, t1, t2, R, vth  : edited for NEURON-9 compatibility to remove U
+	RANGE phi0, phi1, phi2, phi3, phi4  : edited for NEURON-9 compatibility to remove phi
 	RANGE c1, c2, c3, c4, c5
 	RANGE AMinf, AMtau, SF_AM
 	RANGE acm, alpha, alpha1, alpha2, alpha3, beta, gamma
@@ -91,7 +91,7 @@ BREAKPOINT {
 	CaR (CaSR, t)
 	A = AM^alpha
 
-	SOLVE state METHOD cnexp
+	SOLVE state METHOD derivimplicit
 
 	xmArray[0]=xmArray[1]
 	xmArray[1]=xm
