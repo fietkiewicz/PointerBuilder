@@ -14,17 +14,18 @@ insert hh
 
 // Create stimulus for neuron
 objref ns, syn, nc
-ns = new NetStim(0.5)
+ns = new NetStim()
 ns.interval = 100
 syn = new ExpSyn(0.5)
 nc = new NetCon(ns, syn, 0, 0, 2.0)
 
 // Create muscle model
-create muscle
-access muscle
 objref calciumObject, forceObject
-calciumObject = new calcium(0.5)
-forceObject = new force(0.5)
+create muscle
+muscle {
+    calciumObject = new calcium(0.5)
+    forceObject = new force(0.5)
+}
 
 // Set pointer
 setpointer calciumObject.vPointer, cell.v(0.5)
