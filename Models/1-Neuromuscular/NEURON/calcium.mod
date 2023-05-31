@@ -11,8 +11,8 @@ NEURON {
 	POINTER vPointer
 
 	RANGE k1, k2, k3, k4, k5, k6, k, k5i, k6i
-	RANGE Umax, Rmax, t1, t2, R, vth  : edited for NEURON-9 compatibility to remove U
-	RANGE phi0, phi1, phi2, phi3, phi4  : edited for NEURON-9 compatibility to remove phi
+	RANGE Umax, Rmax, t1, t2, R, vth
+	RANGE phi0, phi1, phi2, phi3, phi4
 	RANGE c1, c2, c3, c4, c5
 	RANGE AMinf, AMtau, SF_AM
 	RANGE acm, alpha, alpha1, alpha2, alpha3, beta, gamma
