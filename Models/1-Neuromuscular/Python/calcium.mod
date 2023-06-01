@@ -8,7 +8,6 @@
 
 NEURON {
 	POINT_PROCESS calcium
-	POINTER vPointer
 
 	RANGE k1, k2, k3, k4, k5, k6, k, k5i, k6i
 	RANGE Umax, Rmax, t1, t2, R
@@ -71,7 +70,6 @@ STATE {
 }
 
 ASSIGNED {
-	vPointer
 	R
 	t_shift
 	R_On
