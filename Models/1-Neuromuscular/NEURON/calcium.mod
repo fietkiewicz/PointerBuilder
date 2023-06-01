@@ -85,6 +85,7 @@ ASSIGNED {
 	xmArray[2]
 	vm
 	acm
+	dt
 }
 
 BREAKPOINT {
