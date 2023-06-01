@@ -4,15 +4,15 @@
 ::   The model is adapted from the following paper:
 ::   Kim H. Linking Motoneuron PIC Location to Motor Function in Closed-Loop Motor Unit System Including Afferent
 ::   Feedback: A Computational Investigation. eNeuro. 2020 Apr 27;7(2)
-::   On ModelDB: https://senselab.med.yale.edu/ModelDB/ShowModel?model=266732
+::   On ModelDB: https://modeldb.science/266732
 
 NEURON {
 	POINT_PROCESS calcium
 	POINTER vPointer
 
 	RANGE k1, k2, k3, k4, k5, k6, k, k5i, k6i
-	RANGE Umax, Rmax, t1, t2, R, vth, U
-	RANGE phi0, phi1, phi2, phi3, phi4, phi
+	RANGE Umax, Rmax, t1, t2, R, vth
+	RANGE phi0, phi1, phi2, phi3, phi4
 	RANGE c1, c2, c3, c4, c5
 	RANGE AMinf, AMtau, SF_AM
 	RANGE acm, alpha, alpha1, alpha2, alpha3, beta, gamma
@@ -91,7 +91,7 @@ BREAKPOINT {
 	CaR (CaSR, t)
 	A = AM^alpha
 
-	SOLVE state METHOD cnexp
+	SOLVE state METHOD derivimplicit
 
 	xmArray[0]=xmArray[1]
 	xmArray[1]=xm

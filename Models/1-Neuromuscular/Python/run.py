@@ -9,18 +9,17 @@ Documentation: https:github.com/fietkiewicz/PointerBuilder
 '''
 
 from neuron import h
-from neuron.units import mV, ms
+from neuron.units import mV, ms, µM
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 
 # Create neuron model
 cell = h.Section(name = 'cell')
 cell.insert(h.hh)
 
 # Create stimulus for neuron
-ns = h.NetStim(0.5)
-ns.interval = 100
-syn = h.ExpSyn(0.5)
+ns = h.NetStim()
+ns.interval = 100 * ms
+syn = h.ExpSyn(cell(0.5))
 nc = h.NetCon(ns, syn, 0, 0, 2.0)
 
 # Create muscle model
@@ -40,10 +39,10 @@ f = h.Vector().record(forceObject._ref_F)
 t = h.Vector().record(h._ref_t)
 
 # Run simulation
-tstop = 500
+tstop = 500 * ms
 h.load_file('stdrun.hoc')
 h.finitialize(-65 * mV)
-h.continuerun(tstop * ms)
+h.continuerun(tstop)
 
 
 # Plotting
@@ -54,12 +53,12 @@ ax1.axis([0, tstop, -80, 40])
 ax1.set_ylabel('Vm (mV)')
 
 ax2 = plt.subplot(312)
-ax2.plot(t, ca * 1000, 'b-')
+ax2.plot(t, ca / µM, 'b-')
 ax2.axis([0, tstop, 0, 0.03])
-ax2.set_ylabel('Calcium (uM)')
+ax2.set_ylabel('Calcium (µM)')
 
 ax3 = plt.subplot(313)
-ax3.plot(t, f, 'b-', label = '???')
+ax3.plot(t, f, 'b-')
 ax3.axis([0, tstop, 0, 15])
 ax3.set_ylabel('Force (N)')
 ax3.set_xlabel('t (ms)')
