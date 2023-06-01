@@ -4,7 +4,7 @@
 ::   The model is adapted from the following paper:
 ::   Kim H. Linking Motoneuron PIC Location to Motor Function in Closed-Loop Motor Unit System Including Afferent
 ::   Feedback: A Computational Investigation. eNeuro. 2020 Apr 27;7(2)
-::   On ModelDB: https://senselab.med.yale.edu/ModelDB/ShowModel?model=266732
+::   On ModelDB: https://modeldb.science/266732
 
 NEURON {
     POINT_PROCESS force
