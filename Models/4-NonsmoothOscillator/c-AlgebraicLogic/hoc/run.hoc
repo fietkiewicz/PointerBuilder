@@ -3,9 +3,10 @@
 
 // Create model and insert mechanisms
 create model
-access model
-insert brain
-insert body
+model {
+	insert brain
+	insert body
+}
 
 // Set pointers
 setpointer model.bPointer_brain(0.5), model.b_body(0.5)

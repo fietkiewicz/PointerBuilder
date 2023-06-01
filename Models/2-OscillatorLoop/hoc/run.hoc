@@ -3,9 +3,10 @@
 
 // Create section and insert mechanisms
 create model
-access model
-insert brain
-insert body
+model {
+	insert brain
+	insert body
+}
 
 // Set pointers
 setpointer model.L1Pointer_brain(0.5), L1_body

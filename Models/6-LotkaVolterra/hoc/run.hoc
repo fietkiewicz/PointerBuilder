@@ -3,9 +3,10 @@
 
 // Create section and insert mechanisms
 create model
-access model
-insert prey
-insert predator
+model {
+	insert prey
+	insert predator
+}
 
 // Set pointers
 setpointer model.aPointer_predator(0.5), model.a_prey(0.5)

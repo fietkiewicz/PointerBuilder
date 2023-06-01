@@ -9,8 +9,9 @@
 // Create neuron model
 load_file("nrngui.hoc")
 create cell
-access cell
-insert hh
+cell {
+  insert hh
+}
 
 // Create stimulus for neuron
 objref ns, syn, nc
@@ -35,7 +36,7 @@ neuron_muscle_synapse = new NetCon(&cell.v(0.5), calciumObject)
 neuron_muscle_synapse.threshold = -40
 neuron_muscle_synapse.delay = 0
 
-// Set pointer
+// Set pointers
 setpointer forceObject.aPointer, calciumObject.A
 setpointer forceObject.xmPointer, calciumObject.xm
 
