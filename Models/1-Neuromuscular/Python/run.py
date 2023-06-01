@@ -5,7 +5,7 @@ Documentation: https:github.com/fietkiewicz/PointerBuilder
    The muscle model is adapted from the following paper:
    Kim H. Linking Motoneuron PIC Location to Motor Function in Closed-Loop Motor Unit System Including Afferent
    Feedback: A Computational Investigation. eNeuro. 2020 Apr 27;7(2)
-   On ModelDB: https:senselab.med.yale.edu/ModelDB/ShowModel?model=266732
+   On ModelDB: https://modeldb.science/266732
 '''
 
 from neuron import h
@@ -20,15 +20,21 @@ cell.insert(h.hh)
 ns = h.NetStim()
 ns.interval = 100 * ms
 syn = h.ExpSyn(cell(0.5))
-nc = h.NetCon(ns, syn, 0, 0, 2.0)
+nc = h.NetCon(ns, syn)
+nc.delay = 0 * ms
+nc.weight[0] = 2
 
 # Create muscle model
 body = h.Section(name = 'body')
 calciumObject = h.calcium(body(0.5))
 forceObject = h.force(body(0.5))
 
+# connect neuron to muscle
+neuron_muscle_synapse = h.NetCon(cell(0.5)._ref_v, calciumObject, sec=cell)
+neuron_muscle_synapse.threshold = -40 * mV
+neuron_muscle_synapse.delay = 0 * ms
+
 # Set Pointers
-calciumObject._ref_vPointer = cell(0.5)._ref_v
 forceObject._ref_aPointer = calciumObject._ref_A
 forceObject._ref_xmPointer = calciumObject._ref_xm
 

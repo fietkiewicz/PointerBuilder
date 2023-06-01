@@ -11,7 +11,7 @@ NEURON {
 	POINTER vPointer
 
 	RANGE k1, k2, k3, k4, k5, k6, k, k5i, k6i
-	RANGE Umax, Rmax, t1, t2, R, vth
+	RANGE Umax, Rmax, t1, t2, R
 	RANGE phi0, phi1, phi2, phi3, phi4
 	RANGE c1, c2, c3, c4, c5
 	RANGE AMinf, AMtau, SF_AM
@@ -55,7 +55,6 @@ PARAMETER {
 	gamma = 0.001
 
 	:: Neural input ::
-	vth = -40
 	spk_index = 0
 	t_axon = 0.01
 }
@@ -85,6 +84,7 @@ ASSIGNED {
 	xmArray[2]
 	vm
 	acm
+	dt
 }
 
 BREAKPOINT {
@@ -165,10 +165,7 @@ INITIAL {
 }
 
 NET_RECEIVE (dummy_weight) {
-	if (flag == 1) {
-		WATCH (vPointer > vth) 2
-	}
-	else if (flag == 2) {
+	if (flag == 0) {
 		spk[spk_index] = t + t_axon
 		spk_index = spk_index + 1
 		R_On = 1
