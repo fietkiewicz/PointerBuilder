@@ -42,28 +42,28 @@ DERIVATIVE states {
 }
 
 FUNCTION compute0() {
-  LOCAL aIn1, aIn2, aOut
-  aIn1 = maximum(a0, 0)
-  aIn2 = maximum(a1, 0)
-  aOut = ((aIn1 * (1 - aIn1 - gamma * aIn2) + mu + eps0 * (xrPointer - s0) * sig0)) / tau_a
+  LOCAL aIn0, aIn1, aOut
+  aIn0 = maximum(a0, 0)
+  aIn1 = maximum(a1, 0)
+  aOut = ((aIn0 * (1 - aIn0 - gamma * aIn1) + mu + eps0 * (xrPointer - s0) * sig0)) / tau_a
   aOut = (a0 > 0) * aOut + (a0 <= 0) * maximum(0, aOut)
   compute0 = (a0 < 1) * aOut + (a0 >= 1) * minimum(1, aOut)
 }
 
 FUNCTION compute1() {
-  LOCAL aIn1, aIn2, aOut
-  aIn1 = maximum(a1, 0)
-  aIn2 = maximum(a2, 0)
-  aOut = ((aIn1 * (1 - aIn1 - gamma * aIn2) + mu + eps1 * (xrPointer - s1) * sig1)) / tau_a
+  LOCAL aIn0, aIn1, aOut
+  aIn0 = maximum(a1, 0)
+  aIn1 = maximum(a2, 0)
+  aOut = ((aIn0 * (1 - aIn0 - gamma * aIn1) + mu + eps1 * (xrPointer - s1) * sig1)) / tau_a
   aOut = (a1 > 0) * aOut + (a1 <= 0) * maximum(0, aOut)
   compute1 = (a1 < 1) * aOut + (a1 >= 1) * minimum(1, aOut)
 }
 
 FUNCTION compute2() {
-  LOCAL aIn1, aIn2, aOut
-  aIn1 = maximum(a2, 0)
-  aIn2 = maximum(a0, 0)
-  aOut = ((aIn1 * (1 - aIn1 - gamma * aIn2) + mu + eps2 * (xrPointer - s2) * sig2)) / tau_a
+  LOCAL aIn0, aIn1, aOut
+  aIn0 = maximum(a2, 0)
+  aIn1 = maximum(a0, 0)
+  aOut = ((aIn0 * (1 - aIn0 - gamma * aIn1) + mu + eps2 * (xrPointer - s2) * sig2)) / tau_a
   aOut = (a2 > 0) * aOut + (a2 <= 0) * maximum(0, aOut)
   compute2 = (a2 < 1) * aOut + (a2 >= 1) * minimum(1, aOut)
 }
