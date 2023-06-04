@@ -119,12 +119,11 @@ FUNCTION phi (x) {
 }
 
 PROCEDURE CaR (CaSR (M), t (ms)) {
-	LOCAL i, sum
-	sum = 0
-	FROM i = 0 TO totalSpikes-1 {
-		sum = sum + CaSR*Rmax*(1-exp(-(t-spike[i])/tau1))*exp(-(t-spike[i])/tau2)
+	LOCAL i
+	R = 0
+	FROM i = 0 TO totalSpikes - 1 {
+		R = R + CaSR * Rmax * (1 - exp(-(t - spike[i]) / tau1)) * exp(-(t - spike[i]) / tau2)
 	}
-	R = sum
 }
 
 PROCEDURE rate (CaT (M), AM (M), t(ms)) {
@@ -136,8 +135,6 @@ PROCEDURE rate (CaT (M), AM (M), t(ms)) {
 
 INITIAL {
 	LOCAL i
-	net_send(0,1)
-
 	CaSR = 0.0025  		:[M]
 	CaSRCS = 0			:[M]
 	Ca = 1e-10			:[M]
@@ -146,6 +143,7 @@ INITIAL {
 	AM = 0				:[M]
 	A = 0				:[M]
 	xm = -8
+	R = 0
 
 	FROM i = 0 TO 999 {
 		spike[i] = 0
@@ -157,8 +155,6 @@ INITIAL {
 }
 
 NET_RECEIVE (weight) {
-	if (flag == 0) {
-		spike[totalSpikes] = t + axonDelay
-		totalSpikes = totalSpikes + 1
-	}
+	spike[totalSpikes] = t + axonDelay
+	totalSpikes = totalSpikes + 1
 }
