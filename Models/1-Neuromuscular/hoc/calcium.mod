@@ -10,12 +10,12 @@ NEURON {
 	POINT_PROCESS calcium
 
 	RANGE k1, k2, k3, k4, k5, k6, k, k5i, k6i
-	RANGE Umax, Rmax, t1, t2, R
+	RANGE Umax, Rmax, tau1, tau2, R
 	RANGE phi0, phi1, phi2, phi3, phi4
 	RANGE c1, c2, c3, c4, c5
 	RANGE AMinf, AMtau, SF_AM
 	RANGE acm, alpha, alpha1, alpha2, alpha3, beta, gamma
-	RANGE spk_index, t_axon
+	RANGE totalSpikes, axonDelay
 }
 
 PARAMETER {
@@ -30,8 +30,8 @@ PARAMETER {
 	SF_AM = 5
 	Rmax = 10		: ms-1
 	Umax = 2000		: M-1*ms-1
-	t1 = 3			: ms
-	t2 = 25			: ms
+	tau1 = 3			: ms
+	tau2 = 25			: ms
 	phi1 = 0.03
 	phi2 = 1.23
 	phi3 = 0.01
@@ -54,8 +54,8 @@ PARAMETER {
 	gamma = 0.001
 
 	:: Neural input ::
-	spk_index = 0
-	t_axon = 0.01
+	totalSpikes = 0
+	axonDelay = 0.01
 }
 
 STATE {
@@ -71,14 +71,11 @@ STATE {
 
 ASSIGNED {
 	R
-	t_shift
-	R_On
-	Spike_On
 	k5
 	k6
 	AMinf
 	AMtau
-	spk[1000]
+	spike[1000]
 	xmArray[2]
 	vm
 	acm
@@ -95,7 +92,7 @@ BREAKPOINT {
 	xmArray[1]=xm
 
 	vm = (xmArray[1]-xmArray[0])/(dt*10^-3)
-	
+
 	:: Isometric and isokinetic condition ::
 	A = AM^alpha
 }
@@ -121,15 +118,13 @@ FUNCTION phi (x) {
 	else {phi = phi3*x + phi4}
 }
 
-PROCEDURE CaR (CaSR (M), t (ms)) { LOCAL i, temp_R  ::Ca_Release::
-	if (R_On == 1) {
-		temp_R = 0
-		FROM i=0 TO spk_index-1 {
-			temp_R = temp_R + CaSR*Rmax*(1-exp(-(t-spk[i])/t1))*exp(-(t-spk[i])/t2)
-		}
-		R = temp_R
+PROCEDURE CaR (CaSR (M), t (ms)) {
+	LOCAL i, sum
+	sum = 0
+	FROM i = 0 TO totalSpikes-1 {
+		sum = sum + CaSR*Rmax*(1-exp(-(t-spike[i])/tau1))*exp(-(t-spike[i])/tau2)
 	}
-	else {R = 0}
+	R = sum
 }
 
 PROCEDURE rate (CaT (M), AM (M), t(ms)) {
@@ -153,19 +148,17 @@ INITIAL {
 	xm = -8
 
 	FROM i = 0 TO 999 {
-		spk[i] = 0
+		spike[i] = 0
 	}
 	FROM i = 0 TO 1 {
 		xmArray[i] = 0
 	}
-	spk_index = 0
-	R_On = 0
+	totalSpikes = 0
 }
 
-NET_RECEIVE (dummy_weight) {
+NET_RECEIVE (weight) {
 	if (flag == 0) {
-		spk[spk_index] = t + t_axon
-		spk_index = spk_index + 1
-		R_On = 1
+		spike[totalSpikes] = t + axonDelay
+		totalSpikes = totalSpikes + 1
 	}
 }
