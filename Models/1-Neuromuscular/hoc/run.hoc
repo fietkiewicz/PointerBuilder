@@ -31,10 +31,10 @@ muscle {
 }
 
 // connect neuron to muscle
-objref neuron_muscle_synapse
-neuron_muscle_synapse = new NetCon(&cell.v(0.5), calciumObject)
-neuron_muscle_synapse.threshold = -40
-neuron_muscle_synapse.delay = 0
+objref neuromuscularJunction
+neuromuscularJunction = new NetCon(&cell.v(0.5), calciumObject)
+neuromuscularJunction.threshold = -40
+neuromuscularJunction.delay = 0
 
 // Set pointers
 setpointer forceObject.aPointer, calciumObject.A

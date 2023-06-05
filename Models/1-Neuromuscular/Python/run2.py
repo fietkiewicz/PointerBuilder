@@ -30,9 +30,8 @@ calciumObject = h.calcium(body(0.5))
 forceObject = h.force(body(0.5))
 
 # connect neuron to muscle
-neuron_muscle_synapse = h.NetCon(cell(0.5)._ref_v, calciumObject, sec=cell)
-neuron_muscle_synapse.threshold = -40 * mV
-neuron_muscle_synapse.delay = 0 * ms
+neuromuscularJunction = h.NetCon(cell(0.5)._ref_v, calciumObject, sec=cell)
+neuromuscularJunction.threshold = -40 * mV
 
 # Set Pointers
 h.setpointer(calciumObject._ref_A, 'aPointer', forceObject)
