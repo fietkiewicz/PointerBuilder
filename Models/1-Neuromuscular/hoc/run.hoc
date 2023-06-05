@@ -34,7 +34,6 @@ muscle {
 objref neuromuscularJunction
 neuromuscularJunction = new NetCon(&cell.v(0.5), calciumObject)
 neuromuscularJunction.threshold = -40
-neuromuscularJunction.delay = 0
 
 // Set pointers
 setpointer forceObject.aPointer, calciumObject.A
