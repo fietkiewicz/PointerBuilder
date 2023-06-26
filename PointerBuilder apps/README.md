@@ -2,7 +2,7 @@
 
 This section of the repository contains tools discussed in the following paper:
 
-Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (accepted). Tutorial: Using NEURON for Neuromechanical Simulations. *Frontiers in Computational Neuroscience*.
+Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (2023). Tutorial: Using NEURON for Neuromechanical Simulations. *Frontiers in Computational Neuroscience* 17: 1143323. ([Link](https://www.frontiersin.org/articles/10.3389/fncom.2023.1143323/))
 
 Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). The following tools are available:
 
