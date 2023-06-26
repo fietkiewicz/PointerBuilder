@@ -34,7 +34,7 @@ This collection of NEURON models demonstrates various concepts for neuromechanic
 
 ## 6-LotkaVolterra
 
-**LotkaVolterra** is based on the classic Lotka-Volterra two-population predator-prey model [https://en.wikipedia.org/wiki/Lotka-Volterra_equations](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations).
+**LotkaVolterra** is based on the classic Lotka-Volterra two-population predator-prey model [(https://en.wikipedia.org/wiki/Lotka-Volterra_equations)](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations).
 
 # PointerBuilder apps
 
