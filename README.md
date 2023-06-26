@@ -2,7 +2,7 @@
 
 This repository contains models and tools discussed in the following paper:
 
-Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (2023). Tutorial: Using NEURON for Neuromechanical Simulations. *Frontiers in Computational Neuroscience*. [Lotka-Volterra model](https://doi.org/10.3389/fncom.2023.1143323).
+Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (accepted). Tutorial: Using NEURON for Neuromechanical Simulations. *Frontiers in Computational Neuroscience*.
 
 All models require [NEURON](https::/neuron.yale.edu) to be installed, and Python versions require [Python](https::/python.org).
 
