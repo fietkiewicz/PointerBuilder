@@ -30,11 +30,3 @@ Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). T
 ## 6-LotkaVolterra
 
 **LotkaVolterra** is based on the classic Lotka-Volterra two-population predator-prey model [(https://en.wikipedia.org/wiki/Lotka-Volterra_equations)](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations).
-
-# PointerBuilder apps
-
-These applications are graphical interfaces for working with NEURON pointers. They can be used to learn and verify pointer syntax.
-
-* **NEURON:** This graphical interface, written entirely in NEURON, creates pointer instructions in hoc syntax.
-
-* **Python:** This graphical interface, written entirely in Python, creates pointer instructions in Python syntax. It requires the Tkinter package, which is common to most Python installations.
