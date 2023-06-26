@@ -4,7 +4,7 @@ This repository contains models and tools discussed in the following paper:
 
 Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (accepted). Tutorial: Using NEURON for Neuromechanical Simulations. *Frontiers in Computational Neuroscience*.
 
-All models require [NEURON](https::/neuron.yale.edu) to be installed, and Python versions require [Python](https::/python.org).
+All models require [NEURON](https::/neuron.yale.edu) to be installed, and Python versions require [Python](https://python.org).
 
 Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). The following sections are available:
 
