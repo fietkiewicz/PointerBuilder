@@ -10,7 +10,17 @@ Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). T
 
 # Models
 
-This collection of NEURON models demonstrates various concepts for neuromechanical simulations using pointers, as detailed in the paper above (Fietkiewicz et al.). The following models are available:
+This collection of NEURON models demonstrates various concepts for neuromechanical simulations using pointers, as detailed in the paper above (Fietkiewicz et al.). 
+
+Each model is independent of the others, with all necessary files in a single directory. Most models have both a hoc version and a Python version, each in a separate directory. 
+
+1. Compile all .mod files.
+
+2. For most models, run either run.hoc or run.py, depending on the version you are working with. For “5-AplysiaLoop”, the hoc version has two different .hoc files, each of which uses a different setting for the parameter “mu” (see the paper for details). 
+
+3. For hoc versions, click Init & Run from Run Control GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, the Python version provides a GUI with an Init & Run button, as well as an option to change parameter values.
+
+The following models are available:
 
 ## 1-Neuromuscular
 
