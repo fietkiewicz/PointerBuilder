@@ -5,13 +5,13 @@ Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (2023). Tuto
 
 All models require [NEURON](https::/neuron.yale.edu) to be installed, and Python versions require [Python](https://python.org). Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). 
 
-Each model is independent of the others, with all necessary files in a single directory. Most models have both a hoc version and a Python version, each in a separate directory. The following steps can be used to run the models:
+Each model is independent of the others, with all necessary files in a single directory. Most models have both a hoc version and a Python version, each in a separate directory. The following steps can be used to run each of the models and produce the output shown in the :
 
-1. Compile all .mod files.
+1. Compile the .mod files in the selected directory.
 
 2. For most models, run either run.hoc or run.py, depending on the version you are working with. For “5-AplysiaLoop”, the hoc version has two different .hoc files, each of which uses a different setting for the parameter “mu” (see the paper for details). 
 
-3. For hoc versions, click Init & Run from Run Control GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, the Python version provides a GUI with an Init & Run button, as well as an option to change parameter values.
+3. For hoc versions, click Init & Run from Run Control GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, however, the Python version provides a single GUI where certain parameters may be set and the user must click the Init & Run button.
 
 The following models are available:
 
