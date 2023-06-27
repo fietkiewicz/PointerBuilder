@@ -3,9 +3,17 @@ This section of the repository contains models discussed in the following paper:
 
 Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (2023). Tutorial: Using NEURON for Neuromechanical Simulations. *Frontiers in Computational Neuroscience* 17: 1143323. [[Link](https://www.frontiersin.org/articles/10.3389/fncom.2023.1143323/)]
 
-All models require [NEURON](https::/neuron.yale.edu) to be installed, and Python versions require [Python](https://python.org).
+All models require [NEURON](https::/neuron.yale.edu) to be installed, and Python versions require [Python](https://python.org). Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). 
 
-Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). The following models are available:
+Each model is independent of the others, with all necessary files in a single directory. Most models have both a hoc version and a Python version, each in a separate directory. 
+
+1. Compile all .mod files.
+
+2. For most models, run either run.hoc or run.py, depending on the version you are working with. For “5-AplysiaLoop”, the hoc version has two different .hoc files, each of which uses a different setting for the parameter “mu” (see the paper for details). 
+
+3. For hoc versions, click Init & Run from Run Control GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, the Python version provides a GUI with an Init & Run button, as well as an option to change parameter values.
+
+The following models are available:
 
 ## 1-Neuromuscular
 
