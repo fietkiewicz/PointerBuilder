@@ -5,7 +5,7 @@ Fietkiewicz, C., Corrales Marco, D., Chiel, H. J. and Thomas, P. J. (2023). Tuto
 
 All models require [NEURON](https::/neuron.yale.edu) to be installed, and Python versions require [Python](https://python.org). Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). 
 
-Each model is independent of the others, with all necessary files in a single directory. Most models have both a hoc version and a Python version, each in a separate directory. 
+Each model is independent of the others, with all necessary files in a single directory. Most models have both a hoc version and a Python version, each in a separate directory. The following steps can be used to run the models:
 
 1. Compile all .mod files.
 
