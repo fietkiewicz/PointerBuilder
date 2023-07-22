@@ -10,41 +10,57 @@ Address questions and comments to Dr. Chris Fietkiewicz (fietkiewicz@hws.edu). T
 
 # Models
 
-This collection of NEURON models demonstrates various concepts for neuromechanical simulations using pointers, as detailed in the paper above (Fietkiewicz et al.). 
+This collection of NEURON models demonstrates various concepts for neuromechanical simulations using pointers, as detailed in the paper above (Fietkiewicz et al.).
 
 Each model is independent of the others, with all necessary files in a single directory. Most models have both a hoc version and a Python version, each in a separate directory. The following steps can be used to run each of the models and produce the output shown in the paper cited above:
 
 1. Compile the .mod files in the selected directory.
 
-2. For most models, run either run.hoc or run.py, depending on the version you are working with. For “5-AplysiaLoop”, the hoc version has two different .hoc files, each of which uses a different setting for the parameter “mu” (see the paper for details). 
+2. For most models, run either run.hoc or run.py, depending on the version you are working with. For “5-AplysiaLoop”, the hoc version has two different .hoc files, each of which uses a different setting for the parameter “mu” (see the paper for details).
 
-3. For hoc versions, click Init & Run from Run Control GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, however, the Python version provides a single GUI where certain parameters may be set and the user must click the Init & Run button.
+3. For hoc versions, click Init & Run from the "Run Control" GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, however, the Python version provides a single GUI where certain parameters may be set and the user must click the Init & Run button.
 
 The following models are available:
 
 ## 1-Neuromuscular
 
-**Neuromuscular** is adapted from a neuromuscular model from Kim, Hojeong. "Muscle length-dependent contribution of motoneuron Cav1. 3 channels to force production in model slow motor unit." *Journal of Applied Physiology* 123.1 (2017): 88-105., Kim, Hojeong. "Linking motoneuron PIC location to motor function in closed-loop motor unit system including afferent feedback: a computational investigation." *Eneuro* 7.2 (2020)., and Kim, Hojeong, and Charles J. Heckman. "A dynamic calcium-force relationship model for sag behavior in fast skeletal muscle." *PLOS Computational Biology* 19.6 (2023): e1011178.
+**Neuromuscular** is a neuromuscular model of calcium dynamics and muscle force. It demonstrates basic usage of pointers with an example of calcium dynamics and muscle force. It is adapted from the following:
+
+Kim, Hojeong. "Muscle length-dependent contribution of motoneuron Cav1. 3 channels to force production in model slow motor unit." *Journal of Applied Physiology* 123.1 (2017): 88-105.
+
+Kim, Hojeong. "Linking motoneuron PIC location to motor function in closed-loop motor unit system including afferent feedback: a computational investigation." *Eneuro* 7.2 (2020).
+
+Kim, Hojeong, and Charles J. Heckman. "A dynamic calcium-force relationship model for sag behavior in fast skeletal muscle." *PLOS Computational Biology* 19.6 (2023): e1011178.
 
 ## 2-OscillatorLoop
 
-**OscillatorLoop** is adapted from a closed-loop motor control model from Yu, Zhuojun, and Peter J. Thomas. "Dynamical consequences of sensory feedback in a half-center oscillator coupled to a simple motor system." *Biological Cbernetics* 115.2 (2021): 135-160.
+**OscillatorLoop** is a neuromechanical, closed-loop model of a half-center oscillator coupled to a rudimentary motor system. It contrasts the differences between state variables and parameters. It is adapted from the following:
+
+Yu, Zhuojun, and Peter J. Thomas. "Dynamical consequences of sensory feedback in a half-center oscillator coupled to a simple motor system." *Biological Cbernetics* 115.2 (2021): 135-160.
 
 ## 3-RespirationLoop
 
-**RespirationLoop** is adapted from a closed-loop respiratory model from Diekman, Casey O., Peter J. Thomas, and Christopher G. Wilson. "Eupnea, tachypnea, and autoresuscitation in a closed-loop respiratory control model." *Journal of Neurophysiology* 118.4 (2017): 2194-2215.
+**RespirationLoop** uses the NEURON implicit management of ionic currents with an application for respiratory control. It is adapted from the following:
+
+Diekman, Casey O., Peter J. Thomas, and Christopher G. Wilson. "Eupnea, tachypnea, and autoresuscitation in a closed-loop respiratory control model." *Journal of Neurophysiology* 118.4 (2017): 2194-2215.
 
 ## 4-NonsmoothOscillator
 
-**NonsmoothOscillator** is a simple (1D) non-smooth forced oscillator model.
+**NonsmoothOscillator** is a small, pedagogical model that demonstrates basic techniques for incorporating nonsmooth dynamics.
 
 ## 5-AplysiaLoop
 
-**AplysiaLoop** is adapted from a closed-loop model of the feeding motor system in Aplysia californica from Shaw, Kendrick M., David N. Lyttle, Jeffrey P. Gill, Miranda J. Cullins, Jeffrey M. McManus, Hui Lu, Peter J. Thomas, and Hillel J. Chiel. "The significance of dynamical architecture for adaptive responses to mechanical loads during rhythmic behavior." *Journal of Computational Neuroscience* 38 (2015): 25-51., Lyttle, David N., Jeffrey P. Gill, Kendrick M. Shaw, Peter J. Thomas, and Hillel J. Chiel. "Robustness, flexibility, and sensitivity in a multifunctional motor control model." *Biological Cybernetics* 111 (2017): 25-47., and Wang, Y., Gill, J. P., Chiel, H. J., & Thomas, P. J. (2022). Variational and phase response analysis for limit cycles with hard boundaries, with applications to neuromechanical control problems. *Biological Cybernetics*, 1-24.
+**AplysiaLoop** is a closed-loop model of feeding behavior in the sea hare Aplysia californica. It uses a firing rate model for control of musculature and incorporates a more advanced example of nonsmooth dynamics. It is adapted from the following:
+
+Shaw, Kendrick M., David N. Lyttle, Jeffrey P. Gill, Miranda J. Cullins, Jeffrey M. McManus, Hui Lu, Peter J. Thomas, and Hillel J. Chiel. "The significance of dynamical architecture for adaptive responses to mechanical loads during rhythmic behavior." *Journal of Computational Neuroscience* 38 (2015): 25-51.
+
+Lyttle, David N., Jeffrey P. Gill, Kendrick M. Shaw, Peter J. Thomas, and Hillel J. Chiel. "Robustness, flexibility, and sensitivity in a multifunctional motor control model." *Biological Cybernetics* 111 (2017): 25-47.
+
+Wang, Y., Gill, J. P., Chiel, H. J., & Thomas, P. J. Variational and phase response analysis for limit cycles with hard boundaries, with applications to neuromechanical control problems. *Biological Cybernetics*,  (2022): 1-24.
 
 ## 6-LotkaVolterra
 
-**LotkaVolterra** is based on the classic Lotka-Volterra two-population predator-prey model [(https://en.wikipedia.org/wiki/Lotka-Volterra_equations)](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations).
+**LotkaVolterra** is based on the classic Lotka-Volterra two-population predator-prey model [(https://en.wikipedia.org/wiki/Lotka-Volterra_equations)](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations). It is a small, 2-dimensional system that demonstrates basic pointer usage.
 
 # PointerBuilder apps
 
