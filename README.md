@@ -18,7 +18,7 @@ Each model is independent of the others, with all necessary files in a single di
 
 2. For most models, run either run.hoc or run.py, depending on the version you are working with. For “5-AplysiaLoop”, the hoc version has two different .hoc files, each of which uses a different setting for the parameter “mu” (see the paper for details). 
 
-3. For hoc versions, click Init & Run from Run Control GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, however, the Python version provides a single GUI where certain parameters may be set and the user must click the Init & Run button.
+3. For hoc versions, click Init & Run from the "Run Control" GUI. Most Python versions run the simulation automatically. For “5-AplysiaLoop”, however, the Python version provides a single GUI where certain parameters may be set and the user must click the Init & Run button.
 
 The following models are available:
 
