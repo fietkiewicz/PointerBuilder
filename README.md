@@ -26,23 +26,23 @@ The following models are available:
 
 **Neuromuscular** is a neuromuscular model of calcium dynamics and muscle force. It demonstrates basic usage of pointers with an example of calcium dynamics and muscle force. It is adapted from the following:
 
-Kim, Hojeong. "Muscle length-dependent contribution of motoneuron Cav1. 3 channels to force production in model slow motor unit." *Journal of Applied Physiology* 123.1 (2017): 88-105.
+* Kim, Hojeong. "Muscle length-dependent contribution of motoneuron Cav1. 3 channels to force production in model slow motor unit." *Journal of Applied Physiology* 123.1 (2017): 88-105.
 
-Kim, Hojeong. "Linking motoneuron PIC location to motor function in closed-loop motor unit system including afferent feedback: a computational investigation." *Eneuro* 7.2 (2020).
+* Kim, Hojeong. "Linking motoneuron PIC location to motor function in closed-loop motor unit system including afferent feedback: a computational investigation." *Eneuro* 7.2 (2020).
 
-Kim, Hojeong, and Charles J. Heckman. "A dynamic calcium-force relationship model for sag behavior in fast skeletal muscle." *PLOS Computational Biology* 19.6 (2023): e1011178.
+* Kim, Hojeong, and Charles J. Heckman. "A dynamic calcium-force relationship model for sag behavior in fast skeletal muscle." *PLOS Computational Biology* 19.6 (2023): e1011178.
 
 ## 2-OscillatorLoop
 
 **OscillatorLoop** is a neuromechanical, closed-loop model of a half-center oscillator coupled to a rudimentary motor system. It contrasts the differences between state variables and parameters. It is adapted from the following:
 
-Yu, Zhuojun, and Peter J. Thomas. "Dynamical consequences of sensory feedback in a half-center oscillator coupled to a simple motor system." *Biological Cbernetics* 115.2 (2021): 135-160.
+* Yu, Zhuojun, and Peter J. Thomas. "Dynamical consequences of sensory feedback in a half-center oscillator coupled to a simple motor system." *Biological Cbernetics* 115.2 (2021): 135-160.
 
 ## 3-RespirationLoop
 
 **RespirationLoop** uses the NEURON implicit management of ionic currents with an application for respiratory control. It is adapted from the following:
 
-Diekman, Casey O., Peter J. Thomas, and Christopher G. Wilson. "Eupnea, tachypnea, and autoresuscitation in a closed-loop respiratory control model." *Journal of Neurophysiology* 118.4 (2017): 2194-2215.
+* Diekman, Casey O., Peter J. Thomas, and Christopher G. Wilson. "Eupnea, tachypnea, and autoresuscitation in a closed-loop respiratory control model." *Journal of Neurophysiology* 118.4 (2017): 2194-2215.
 
 ## 4-NonsmoothOscillator
 
@@ -52,11 +52,11 @@ Diekman, Casey O., Peter J. Thomas, and Christopher G. Wilson. "Eupnea, tachypne
 
 **AplysiaLoop** is a closed-loop model of feeding behavior in the sea hare Aplysia californica. It uses a firing rate model for control of musculature and incorporates a more advanced example of nonsmooth dynamics. It is adapted from the following:
 
-Shaw, Kendrick M., David N. Lyttle, Jeffrey P. Gill, Miranda J. Cullins, Jeffrey M. McManus, Hui Lu, Peter J. Thomas, and Hillel J. Chiel. "The significance of dynamical architecture for adaptive responses to mechanical loads during rhythmic behavior." *Journal of Computational Neuroscience* 38 (2015): 25-51.
+* Shaw, Kendrick M., David N. Lyttle, Jeffrey P. Gill, Miranda J. Cullins, Jeffrey M. McManus, Hui Lu, Peter J. Thomas, and Hillel J. Chiel. "The significance of dynamical architecture for adaptive responses to mechanical loads during rhythmic behavior." *Journal of Computational Neuroscience* 38 (2015): 25-51.
 
-Lyttle, David N., Jeffrey P. Gill, Kendrick M. Shaw, Peter J. Thomas, and Hillel J. Chiel. "Robustness, flexibility, and sensitivity in a multifunctional motor control model." *Biological Cybernetics* 111 (2017): 25-47.
+* Lyttle, David N., Jeffrey P. Gill, Kendrick M. Shaw, Peter J. Thomas, and Hillel J. Chiel. "Robustness, flexibility, and sensitivity in a multifunctional motor control model." *Biological Cybernetics* 111 (2017): 25-47.
 
-Wang, Y., Gill, J. P., Chiel, H. J., & Thomas, P. J. Variational and phase response analysis for limit cycles with hard boundaries, with applications to neuromechanical control problems. *Biological Cybernetics*,  (2022): 1-24.
+* Wang, Y., Gill, J. P., Chiel, H. J., & Thomas, P. J. Variational and phase response analysis for limit cycles with hard boundaries, with applications to neuromechanical control problems. *Biological Cybernetics*,  (2022): 1-24.
 
 ## 6-LotkaVolterra
 
